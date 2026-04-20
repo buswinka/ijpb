@@ -1,7 +1,7 @@
 {
-  "version": "0.1.15",
-  "url": "https://github.com/buswinka/ijpb/releases/download/v0.1.15/ImageJPipelineBuilder.jar",
-  "sha256": "9856224d78d70074b4f3ca0574986aa02746c83451c9aa3da5157d07d75dcd2b",
+  "version": "0.1.16",
+  "url": "https://github.com/buswinka/ijpb/releases/download/v0.1.16/ImageJPipelineBuilder.jar",
+  "sha256": "7e758e57cc7ada283442c8bdaab5e804f79685ecb05a4e04618b067f2f867f70",
   "mandatory": false,
-  "release_notes": "Initial release"
+  "release_notes": "Fixed updater. Beta Capable Version."
 }
