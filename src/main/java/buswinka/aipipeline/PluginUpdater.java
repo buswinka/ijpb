@@ -36,7 +36,7 @@ public final class PluginUpdater {
 
     /** Manifest hosted on GitHub Pages (docs/ folder, branch main). */
     private static final String MANIFEST_URL =
-        "https://buswinka.github.io/imagej-pipeline-ai/latest.json";
+        "https://buswinka.github.io/ijpb/latest.json";
 
     private static final String PREF_LAST_CHECK = "ijpb.updater.lastCheck";
     private static final String PREF_ENABLED    = "ijpb.updater.enabled";

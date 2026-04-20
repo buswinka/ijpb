@@ -1,0 +1,16 @@
+name = "imagej-llm-backend"
+main = "src/index.ts"
+compatibility_date = "2025-10-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Secrets (set via `wrangler secret put <n>`):
+#   SUPABASE_URL          e.g. https://xxxx.supabase.co
+#   SUPABASE_SERVICE_KEY  service_role key
+#   ANTHROPIC_API_KEY     sk-ant-...
+
+# Per-device rate limit: 20 requests per 60s per device_uuid.
+[[unsafe.bindings]]
+name = "CHAT_RATELIMIT"
+type = "ratelimit"
+namespace_id = "1001"
+simple = { limit = 20, period = 60 }
