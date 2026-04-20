@@ -1,7 +1,9 @@
 {
-  "version": "0.1.18",
-  "url": "https://github.com/buswinka/ijpb/releases/download/v0.1.18/ImageJPipelineBuilder.jar",
-  "sha256": "7ed9bc5315a3f3db02e08a2d13e0478b96ce88fc86985109384764a3ca137311",
+  "version": "0.1.21",
+  "url": "https://github.com/buswinka/ijpb/releases/download/v0.1.21/ImageJPipelineBuilder.jar",
+  "sha256": "2803ef1688b0b4aa0b4c4e937b1d5df16e604c3df6750cf8fa44bcadbd74b982",
   "mandatory": false,
-  "release_notes": "Updated LLM Api Call Security. Refined user prompt for descriptive clarity."
+  "release_notes": "- Updated chat bubbles styling to better convey usage limit warnings for cloud
+- Added ability to change chat provider mid conversation
+- General stability improvements"
 }
