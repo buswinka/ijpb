@@ -14,7 +14,7 @@
 
   <groupId>buswinka.aipipeline</groupId>
   <artifactId>ImageJPipelineAI</artifactId>
-  <version>0.1.16</version>
+  <version>0.1.18</version>
 
   <name>AI Pipeline Builder</name>
   <description>AI-powered macro generation plugin for Fiji/ImageJ</description>

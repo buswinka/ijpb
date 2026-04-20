@@ -1,7 +1,7 @@
 {
-  "version": "0.1.16",
-  "url": "https://github.com/buswinka/ijpb/releases/download/v0.1.16/ImageJPipelineBuilder.jar",
-  "sha256": "7e758e57cc7ada283442c8bdaab5e804f79685ecb05a4e04618b067f2f867f70",
+  "version": "0.1.18",
+  "url": "https://github.com/buswinka/ijpb/releases/download/v0.1.18/ImageJPipelineBuilder.jar",
+  "sha256": "7ed9bc5315a3f3db02e08a2d13e0478b96ce88fc86985109384764a3ca137311",
   "mandatory": false,
-  "release_notes": "Fixed updater. Beta Capable Version."
+  "release_notes": "Updated LLM Api Call Security. Refined user prompt for descriptive clarity."
 }
