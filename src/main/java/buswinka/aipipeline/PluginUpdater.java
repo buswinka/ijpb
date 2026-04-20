@@ -29,7 +29,7 @@ public final class PluginUpdater {
      * Plugin version — bump this string on every release, matching the version
      * field in docs/latest.json and the GitHub release tag.
      */
-    public static final String CURRENT_VERSION = "1.0.0";
+    public static final String CURRENT_VERSION = "0.1.15";
 
     /** Must stay constant so ImageJ's update-folder swap logic can find the file. */
     public static final String JAR_NAME = "ImageJPipelineBuilder.jar";
@@ -143,8 +143,11 @@ public final class PluginUpdater {
 
     private static Manifest fetchManifest() throws IOException {
         try (InputStream in = openStream(MANIFEST_URL)) {
-            byte[] buf = in.readAllBytes();
-            return Manifest.parse(new String(buf, java.nio.charset.StandardCharsets.UTF_8));
+            java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
+            byte[] buf = new byte[4096];
+            int n;
+            while ((n = in.read(buf)) > 0) out.write(buf, 0, n);
+            return Manifest.parse(out.toString("UTF-8"));
         }
     }
 

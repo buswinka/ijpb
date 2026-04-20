@@ -1,7 +1,7 @@
 {
-  "version": "0.1.14",
-  "url": "https://github.com/buswinka/imagej-pipeline-ai/releases/download/v0.1.14/ImageJPipelineBuilder.jar",
-  "sha256": "",
+  "version": "0.1.15",
+  "url": "https://github.com/buswinka/ijpb/releases/download/v0.1.15/ImageJPipelineBuilder.jar",
+  "sha256": "9856224d78d70074b4f3ca0574986aa02746c83451c9aa3da5157d07d75dcd2b",
   "mandatory": false,
-  "release_notes": ""
+  "release_notes": "Initial release"
 }
