@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EGCCXG503Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EGCCXG503Y');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IJPB | AI Pipeline Builder for ImageJ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Outfit:wght@800;900&family=Bagel+Fat+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/landing_page.css">
+  <link rel="icon" type="image/png" href="images/icon.png">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topbar">
+  <a href="index.html" class="topbar-logo">IJPB</a>
+  <ul class="topbar-nav">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#use-cases">Use Cases</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="quickstart.html">Docs</a></li>
+    <li><a href="#contact-footer">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE NAV OVERLAY -->
+<div class="mobile-nav" id="mobileNav">
+  <ul>
+    <li><a href="#features" onclick="closeMobile()">Features</a></li>
+    <li><a href="#use-cases" onclick="closeMobile()">Use Cases</a></li>
+    <li>l<a href="pricing.html">Pricing</a></li>
+    <li><a href="quickstart.html" onclick="closeMobile()">Docs</a></li>
+    <li><a href="#contact-footer" onclick="closeMobile()">Contact</a></li>
+  </ul>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text anim-slide-left">
+      <h1>JUST TELL<br>IMAGEJ WHAT<br>YOU NEED</h1>
+      <p>The best AI models making ImageJ plugins to do whatever you want.</p>
+      <div class="hero-actions">
+<!--        <a href="pricing.html" class="cta-btn">Get Started Free</a>-->
+        <a href="#how-it-works" class="cta-btn cta-btn-ghost">See How</a>
+      </div>
+    </div>
+    <div class="hero-visuals anim-slide-right">
+      <div class="hero-img-wrap">
+        <img src="images/imageJ_stack.png" alt="AI Pipeline Builder in ImageJ — chat interface with microscopy images and analysis results">
+        <div class="hero-img-glow"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!--
+The website seems a bit stale. Idk kinda early 2020s in design. Lacking Flair. Lacking Interest.
+
+I like Ollama's page. Seems good.
+
+
+-->
+
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works" id="how-it-works">
+  <h2 class="section-title anim-fade">How it works</h2>
+  <div class="steps">
+    <div class="step anim-fade">
+      <div class="step-num">1</div>
+      <div class="step-visual">
+        <div class="step-mock chat-mock">
+          <div class="mock-bubble user-bubble">Segment nuclei in the blue channel and count them</div>
+          <div class="mock-bubble ai-bubble">Got it — generating an ImageJ macro with Otsu thresholding and watershed separation…</div>
+        </div>
+      </div>
+      <h3>Think. What are you sick of doing?</h3>
+      <p>Open up a chat window in ImageJ and tell the AI what you need in plain English. It can be literally anything. </p>
+    </div>
+    <div class="step anim-fade">
+      <div class="step-num">2</div>
+      <div class="step-visual">
+        <div class="step-mock code-mock">
+          <div class="mock-code-line"><span class="kw">run</span>(<span class="str">"Split Channels"</span>);</div>
+          <div class="mock-code-line"><span class="kw">setAutoThreshold</span>(<span class="str">"Otsu"</span>);</div>
+          <div class="mock-code-line"><span class="kw">run</span>(<span class="str">"Watershed"</span>);</div>
+          <div class="mock-code-line"><span class="kw">run</span>(<span class="str">"Analyze Particles..."</span>);</div>
+        </div>
+      </div>
+      <h3>The AI automates it for you.</h3>
+      <p>It writes a script you can run from the chat window. It evaluates on the currently open image. Results are returned to ImageJ. The AI will fix it if it doesn't.</p>
+    </div>
+    <div class="step anim-fade">
+      <div class="step-num">3</div>
+      <div class="step-visual">
+        <div class="step-mock results-mock">
+          <div class="mock-result-row"><span>Nuclei found</span><strong>247</strong></div>
+          <div class="mock-result-row"><span>Mean area</span><strong>142.3 µm²</strong></div>
+          <div class="mock-result-row"><span>Processing time</span><strong>1.2s</strong></div>
+        </div>
+      </div>
+      <h3>Save your automation in ImageJ.</h3>
+      <p>Save the pipeline as menu item. Run it on a batch of images. Iterate on it later. Stop thinking.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <img class="cloud-accent cloud-accent--left"  src="images/cloud_dither.png" alt="">
+  <img class="cloud-accent cloud-accent--right" src="images/cloud_dither.png" alt="">
+  <h2 class="section-title anim-fade">Build your plugin natively in ImageJ</h2>
+  <div class="feature-grid">
+    <div class="feature-card anim-fade">
+      <div class="feature-icon-wrap">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/></svg>
+      </div>
+      <h3>Natural Language building</h3>
+      <p>Turn <em>"give me the fluorescent intensity of every cell in the image"</em> into a working plugin in 10&nbsp;seconds.</p>
+    </div>
+    <!--    <div class="feature-card anim-fade">-->
+    <!--      <div class="feature-icon-wrap">-->
+    <!--        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>-->
+    <!--      </div>-->
+    <!--      <h3>Reusable Pipelines</h3>-->
+    <!--      <p>Save, share, and rerun generated workflows. Build a library your whole lab can use with one&nbsp;click.</p>-->
+    <!--    </div>-->
+    <div class="feature-card anim-fade">
+      <div class="feature-icon-wrap">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>
+      </div>
+      <h3>Python Integration</h3>
+      <p>Bridge ImageJ macros with Python. Use CellPose, scikit-image, or your own models directly from the&nbsp;builder.</p>
+    </div>
+    <div class="feature-card anim-fade">
+      <div class="feature-icon-wrap">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v3"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+      </div>
+      <h3>Batch Processing</h3>
+      <p>Run your pipeline across entire folders. Process hundreds of images with consistent parameters and automatic&nbsp;export.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section class="install-section" id="install">
+  <h2 class="section-title anim-fade">Installs Easily</h2>
+<!--  <p class="install-lead anim-fade">Practice here.</p>-->
+
+  <!-- Steps: horizontal row -->
+  <div class="idemo-steps-row">
+    <div class="idemo-text-step anim-fade">
+      <div class="idemo-text-num">1</div>
+      <h3><a class="idemo-dl-link" href="https://github.com/buswinka/ijpb/releases/latest/download/ImageJPipelineBuilder.jar">Download IJPB Plugin</a></h3>
+      <p>Grab the latest release.</p>
+    </div>
+    <div class="idemo-text-step anim-fade">
+      <div class="idemo-text-num">2</div>
+      <h3>Drag JAR into Fiji</h3>
+      <p>Drop it onto the Fiji window. It installs itself automatically.</p>
+    </div>
+    <div class="idemo-text-step idemo-text-step--done anim-fade" id="idemoDone">
+      <div class="idemo-text-num">3</div>
+      <h3>Restart ImageJ</h3>
+      <p>Relaunch and find the plugin under Pipelines&nbsp;→&nbsp;New</p>
+    </div>
+  </div>
+
+  <!-- Demo area -->
+  <div class="idemo-wrap anim-fade" id="idemoContainer">
+
+    <svg id="idemoArrow" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:5;">
+      <defs>
+        <marker id="idemoArrowhead" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="rgba(255,255,255,0.65)"/>
+        </marker>
+      </defs>
+      <line id="idemoArrowLine" stroke="rgba(255,255,255,0.65)" stroke-width="1.5"
+            marker-end="url(#idemoArrowhead)" x1="0" y1="0" x2="0" y2="0"/>
+      <text id="idemoArrowLabel" font-family="DM Sans, sans-serif" font-size="12"
+            font-weight="600" fill="rgba(255,255,255,0.65)" text-anchor="middle" dominant-baseline="middle">Drag into ImageJ</text>
+    </svg>
+
+    <div class="idemo-jar" id="idemoJar">
+      <span class="idemo-jar-emoji">☕</span>
+      <span class="idemo-jar-label">IJPB.jar</span>
+    </div>
+
+    <img class="idemo-fiji" id="idemoFiji" src="images/fiji_window.png" alt="Fiji window" draggable="false">
+
+    <!-- Success banner (hidden until drop) -->
+    <div class="idemo-success" id="idemoSuccess">
+      <span class="idemo-success-text">Success! Now you're ready to try it yourself</span>
+      <a class="idemo-success-btn" href="https://github.com/buswinka/ijpb/releases/latest/download/ImageJPipelineBuilder.jar">Download Here</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ALWAYS FREE -->
+<section class="always-free" id="always-free">
+  <div class="always-free-inner">
+    <div class="always-free-left anim-fade">
+      <h2>Always Free.<br>Cloud if you need it.</h2>
+      <p>Build with your own model or use our cloud if you don't want to think about that. The charge helps support our API costs and supports new features and future development.</p>
+      <ul class="model-checklist">
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Bring a ChatGPT or Claude API Key
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Ollama support for local LLMs
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Use our cloud for hassle-free building
+        </li>
+      </ul>
+    </div>
+    <div class="always-free-cards">
+      <div class="value-card anim-fade">
+        <div class="value-card-info">
+          <h4>Free</h4>
+          <h3>Build what you need when you need it</h3>
+          <p>Configure your AI and build for free. Bring your own key or use 25 starter credits.</p>
+        </div>
+        <a href="pricing.html" class="cta-btn">Get Free</a>
+      </div>
+      <div class="value-card value-card--cloud anim-fade">
+        <div class="value-card-info">
+          <h4>Cloud &nbsp;<span class="value-card-price">$6 / mo</span></h4>
+          <h3>Preconfigured for hassle-free building</h3>
+          <p>No API key, no rate-limit wrangling. Just open the plugin and start building.</p>
+        </div>
+        <a href="pricing.html" class="cta-btn">Start Cloud</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<!--&lt;!&ndash; SOCIAL PROOF BAR &ndash;&gt;-->
+<!--<section class="social-proof anim-fade">-->
+<!--  <div class="proof-inner">-->
+<!--    <div class="proof-stat">-->
+<!--      <span class="proof-num">2,400+</span>-->
+<!--      <span class="proof-label">Pipelines created</span>-->
+<!--    </div>-->
+<!--    <div class="proof-divider"></div>-->
+<!--    <div class="proof-stat">-->
+<!--      <span class="proof-num">180+</span>-->
+<!--      <span class="proof-label">Labs using IJPB</span>-->
+<!--    </div>-->
+<!--    <div class="proof-divider"></div>-->
+<!--    <div class="proof-stat">-->
+<!--      <span class="proof-num">40×</span>-->
+<!--      <span class="proof-label">Faster than manual scripting</span>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+
+
+
+<!-- COMMUNITY SHOWCASE -->
+<section class="community" id="use-cases">
+  <h2 class="section-title anim-fade">See what others have built</h2>
+  <p class="community-sub anim-fade">Real pipelines from the IJPB community. Click any card to see the conversation.</p>
+  <div class="community-grid">
+
+    <div class="community-card anim-fade" onclick="openCard(0)">
+      <div class="community-card-tag">Cell Biology</div>
+      <h3>DAPI Nuclei Counter</h3>
+      <p class="community-card-prompt">"Count DAPI-stained nuclei, separate touching cells, and export count and mean area per image."</p>
+      <div class="community-card-footer">
+        <span>ImageJ Macro</span><span>38 lines</span>
+      </div>
+    </div>
+
+    <div class="community-card anim-fade" onclick="openCard(1)">
+      <div class="community-card-tag">Segmentation</div>
+      <h3>CellPose Membrane Detector</h3>
+      <p class="community-card-prompt">"Use CellPose to segment HeLa cells in phase contrast and output individual cell mask TIFFs."</p>
+      <div class="community-card-footer">
+        <span>Python</span><span>52 lines</span>
+      </div>
+    </div>
+
+    <div class="community-card anim-fade" onclick="openCard(2)">
+      <div class="community-card-tag">Colocalization</div>
+      <h3>GFP/RFP Colocalization Report</h3>
+      <p class="community-card-prompt">"Measure Pearson and Manders coefficients between GFP and RFP channels across 48 images."</p>
+      <div class="community-card-footer">
+        <span>ImageJ Macro</span><span>44 lines</span>
+      </div>
+    </div>
+
+    <div class="community-card anim-fade" onclick="openCard(3)">
+      <div class="community-card-tag">FISH</div>
+      <h3>smFISH Spot Counter</h3>
+      <p class="community-card-prompt">"Count mRNA FISH spots per nucleus, normalize to nuclear area, and export a tidy CSV."</p>
+      <div class="community-card-footer">
+        <span>ImageJ Macro</span><span>61 lines</span>
+      </div>
+    </div>
+
+    <div class="community-card anim-fade" onclick="openCard(4)">
+      <div class="community-card-tag">Batch Processing</div>
+      <h3>Batch Fluorescence Analyzer</h3>
+      <p class="community-card-prompt">"Rolling-ball background subtraction + mean intensity per channel per ROI across 200 images."</p>
+      <div class="community-card-footer">
+        <span>ImageJ Macro</span><span>73 lines</span>
+      </div>
+    </div>
+
+    <div class="community-card anim-fade" onclick="openCard(5)">
+      <div class="community-card-tag">Live Cell</div>
+      <h3>Mitochondria Fission Tracker</h3>
+      <p class="community-card-prompt">"Detect and track mitochondrial fission events in a 100-frame time-lapse using TrackMate."</p>
+      <div class="community-card-footer">
+        <span>ImageJ Macro</span><span>89 lines</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modal -->
+  <div class="community-modal" id="communityModal" onclick="closeCardModal(event)">
+    <div class="community-modal-box">
+      <button class="community-modal-close" onclick="closeCard()">&#x2715;</button>
+      <div id="communityModalBody"></div>
+    </div>
+  </div>
+
+  <img class="yellow-cloud-accent yellow-cloud-accent--left"  src="images/yellow-cloud.png" alt="">
+  <img class="yellow-cloud-accent yellow-cloud-accent--right" src="images/yellow-cloud.png" alt="">
+</section>
+
+<!--&lt;!&ndash; TESTIMONIALS &ndash;&gt;-->
+<!--<section class="testimonials anim-fade">-->
+<!--  <h2 class="section-title">What researchers are saying</h2>-->
+<!--  <div class="testimonial-grid">-->
+<!--    <div class="testimonial-card">-->
+<!--      <p class="testimonial-text">"I used to spend an afternoon writing macros for each new experiment. Now I describe what I need and it just works. This has changed my workflow completely."</p>-->
+<!--      <div class="testimonial-author">-->
+<!--        <div class="author-avatar">SL</div>-->
+<!--        <div>-->
+<!--          <strong>Dr. Sarah Lin</strong>-->
+<!--          <span>Cell Biology, Stanford</span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="testimonial-card">-->
+<!--      <p class="testimonial-text">"The Python integration is a game changer. I can call CellPose from the same pipeline as my ImageJ preprocessing. No more duct-taping scripts together."</p>-->
+<!--      <div class="testimonial-author">-->
+<!--        <div class="author-avatar">MK</div>-->
+<!--        <div>-->
+<!--          <strong>Marco Kessler</strong>-->
+<!--          <span>Imaging Core, MPI Göttingen</span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="testimonial-card">-->
+<!--      <p class="testimonial-text">"We onboarded our entire lab in a day. Students who've never written a macro are now building batch processing pipelines on their own."</p>-->
+<!--      <div class="testimonial-author">-->
+<!--        <div class="author-avatar">RP</div>-->
+<!--        <div>-->
+<!--          <strong>Dr. Raj Patel</strong>-->
+<!--          <span>Neuroscience, UCL</span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+
+<!-- DOCS TEASER -->
+<section class="docs-teaser" id="docs-teaser">
+  <div class="docs-inner anim-fade">
+    <div class="docs-text">
+      <h2>Well-documented, well-supported</h2>
+      <p>Full API reference, quickstart guides, and video tutorials. Get up and running in under 5&nbsp;minutes.</p>
+      <div class="docs-links">
+        <a href="quickstart.html" class="docs-link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          Quickstart Guide
+        </a>
+        <a href="#" class="docs-link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          API Reference
+        </a>
+        <a href="#" class="docs-link">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          Video Tutorials
+        </a>
+      </div>
+    </div>
+    <div class="docs-code-preview">
+      <div class="code-window">
+        <div class="code-dots"><span></span><span></span><span></span></div>
+        <pre><code><span class="comment">// Install in 30 seconds</span>
+<span class="comment">// ImageJ → Plugins → IJPB → Install</span>
+
+<span class="comment">// Or via update site:</span>
+<span class="kw">Help</span> → <span class="str">Update...</span>
+  → <span class="str">Manage update sites</span>
+  → <span class="kw">Add</span>: <span class="str">IJPB-Pipeline-Builder</span></code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="footer-cta">
+  <h2 class="anim-fade">Ready to accelerate your analysis?</h2>
+  <p class="anim-fade">Install the AI Pipeline Builder and start building in&nbsp;minutes.</p>
+  <a href="pricing.html" class="cta-btn anim-fade">Get Started Free</a>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer" id="contact-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" class="topbar-logo">IJPB</a>
+      <p>AI-powered pipeline builder for ImageJ. Built for researchers, by researchers.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="#features">Features</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="#use-cases">Use Cases</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="#">Documentation</a>
+        <a href="quickstart.html">Quickstart</a>
+        <a href="#">API Reference</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 IJPB. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+    document.body.classList.toggle('nav-open');
+  });
+  function closeMobile() {
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+    document.body.classList.remove('nav-open');
+  }
+
+  // Community showcase data
+  const communityPipelines = [
+    {
+      tag: "Cell Biology", title: "DAPI Nuclei Counter", lang: "ImageJ Macro",
+      conversation: [
+        { role: "user", text: "Count all nuclei in the DAPI channel of a 3-channel confocal image. Separate touching nuclei and output a results table with count, mean area, and mean intensity." },
+        { role: "ai", text: "I'll split channels, isolate DAPI, apply Otsu thresholding, run watershed to separate touching nuclei, then Analyze Particles. Should I subtract background first?" },
+        { role: "user", text: "Yes — rolling ball radius 50." },
+        { role: "ai", text: "Got it. Here's the macro:" }
+      ],
+      code: `// DAPI Nuclei Counter — generated by IJPB\nrun("Split Channels");\nselectWindow("C1-" + getTitle());\nrun("Subtract Background...", "rolling=50");\nsetAutoThreshold("Otsu dark");\nrun("Convert to Mask");\nrun("Watershed");\nrun("Analyze Particles...", "size=20-Infinity circularity=0.3-1.0 display results");`
+    },
+    {
+      tag: "Segmentation", title: "CellPose Membrane Detector", lang: "Python",
+      conversation: [
+        { role: "user", text: "Use CellPose to segment HeLa cells in phase contrast images and output individual cell masks as a label image." },
+        { role: "ai", text: "I'll use the CellPose API with the 'cyto2' model, which works well on phase contrast. Process a single image or a whole folder?" },
+        { role: "user", text: "A whole folder — save each mask next to the original." },
+        { role: "ai", text: "Got it — batch mode, masks saved as *_masks.tif alongside each input." }
+      ],
+      code: `# CellPose Membrane Detector — generated by IJPB\nfrom cellpose import models\nimport tifffile, pathlib\n\nmodel = models.Cellpose(model_type='cyto2', gpu=False)\nfolder = pathlib.Path(IJ.getDirectory("Select image folder"))\n\nfor img_path in folder.glob("*.tif"):\n    img = tifffile.imread(img_path)\n    masks, _, _, _ = model.eval(img, diameter=None, channels=[0,0])\n    out = img_path.with_name(img_path.stem + "_masks.tif")\n    tifffile.imwrite(out, masks.astype("uint16"))`
+    },
+    {
+      tag: "Colocalization", title: "GFP/RFP Colocalization Report", lang: "ImageJ Macro",
+      conversation: [
+        { role: "user", text: "Measure Pearson and Manders colocalization coefficients between GFP and RFP channels across a folder of 48 images. Export a CSV with one row per image." },
+        { role: "ai", text: "I'll use JACoP for the coefficients. Are images multi-channel TIFFs or split per channel?" },
+        { role: "user", text: "Multi-channel TIFFs, channel 1 = GFP, channel 2 = RFP." },
+        { role: "ai", text: "The macro will split channels, run JACoP, and append results to a master CSV." }
+      ],
+      code: `// GFP/RFP Colocalization — generated by IJPB\ndir = getDirectory("Choose image folder");\nlist = getFileList(dir);\nresults = dir + "colocalization_results.csv";\nFile.saveString("Image,Pearson,M1,M2\\n", results);\n\nfor (i = 0; i < list.length; i++) {\n  open(dir + list[i]);\n  run("Split Channels");\n  ch1 = "C1-" + list[i]; ch2 = "C2-" + list[i];\n  run("JACoP", "img1=" + ch1 + " img2=" + ch2 + " pearson manders");\n  // parse and append results...\n  close("*");\n}`
+    },
+    {
+      tag: "FISH", title: "smFISH Spot Counter", lang: "ImageJ Macro",
+      conversation: [
+        { role: "user", text: "Count single-molecule FISH spots per nucleus. Normalize by nuclear area and export a tidy CSV with one row per nucleus." },
+        { role: "ai", text: "I'll detect nuclei from DAPI, detect spots using Laplacian-of-Gaussian, then assign spots to the nearest nucleus ROI. What's the approximate spot diameter in pixels?" },
+        { role: "user", text: "About 3 pixels." },
+        { role: "ai", text: "Using LoG with sigma=1.5. Here's the macro:" }
+      ],
+      code: `// smFISH Spot Counter — generated by IJPB\nrun("Split Channels");\nselectWindow("C1-image.tif");\nsetAutoThreshold("Triangle dark");\nrun("Convert to Mask");\nrun("Analyze Particles...", "size=50-Infinity add");\n\nselectWindow("C2-image.tif");\nrun("LoG 3D", "sigma_x=1.5 sigma_y=1.5 sigma_z=1");\nsetAutoThreshold("MaxEntropy dark");\nrun("Find Maxima...", "prominence=200 output=[Point Selection]");\n// assign spots to ROIs and export CSV...`
+    },
+    {
+      tag: "Batch Processing", title: "Batch Fluorescence Analyzer", lang: "ImageJ Macro",
+      conversation: [
+        { role: "user", text: "I have 200 3-channel fluorescence images. For each: rolling ball background subtraction, then mean intensity per ROI per channel. Save everything to one CSV." },
+        { role: "ai", text: "I'll loop over the folder, subtract background in each channel, detect ROIs from channel 1, measure all channels inside those ROIs, and append to a master CSV. What rolling ball radius?" },
+        { role: "user", text: "50 pixels. Detect ROIs from channel 1 and apply to all." },
+        { role: "ai", text: "Single-channel ROI detection, multi-channel measurement — here's the macro:" }
+      ],
+      code: `// Batch Fluorescence Analyzer — generated by IJPB\ndir = getDirectory("Select image folder");\nlist = getFileList(dir);\n\nfor (i = 0; i < list.length; i++) {\n  open(dir + list[i]);\n  title = getTitle();\n  run("Split Channels");\n  for (c = 1; c <= 3; c++) {\n    selectWindow("C" + c + "-" + title);\n    run("Subtract Background...", "rolling=50");\n  }\n  selectWindow("C1-" + title);\n  setAutoThreshold("Otsu dark");\n  run("Analyze Particles...", "size=20-Infinity add");\n  // Measure all channels, append to CSV...\n  close("*");\n}`
+    },
+    {
+      tag: "Live Cell", title: "Mitochondria Fission Tracker", lang: "ImageJ Macro",
+      conversation: [
+        { role: "user", text: "Detect and track mitochondrial fission events in a 100-frame time-lapse using TrackMate. Export trajectories and flag frames where a fission event occurs." },
+        { role: "ai", text: "I'll use TrackMate's scripting API with a LoG detector and LAP linker, then flag frames where one track splits into two. Single Z-plane or a Z-stack per time point?" },
+        { role: "user", text: "Single plane, 100ms frame rate." },
+        { role: "ai", text: "No Z-projection needed. Generating the TrackMate script:" }
+      ],
+      code: `// Mitochondria Fission Tracker — generated by IJPB\nimport fiji.plugin.trackmate.*;\nimport fiji.plugin.trackmate.detection.*;\nimport fiji.plugin.trackmate.tracking.sparselap.*;\n\nModel model = new Model();\nSettings settings = new Settings(IJ.getImage());\nsettings.detectorFactory = new LogDetectorFactory();\nsettings.detectorSettings = settings.detectorFactory.getDefaultSettings();\nsettings.detectorSettings.put("RADIUS", 0.5);\nsettings.detectorSettings.put("THRESHOLD", 0.02);\nsettings.trackerFactory = new SparseLAPTrackerFactory();\n// configure LAP linker, run, and flag fission events...`
+    }
+  ];
+
+  function openCard(idx) {
+    const p = communityPipelines[idx];
+    const convoHTML = p.conversation.map(m =>
+      `<div class="modal-bubble ${m.role}">${m.text}</div>`
+    ).join('');
+    const codeEscaped = p.code.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    document.getElementById('communityModalBody').innerHTML = `
+      <div class="modal-tag">${p.tag}</div>
+      <div class="modal-title">${p.title}</div>
+      <div class="modal-section-label">Conversation</div>
+      <div class="modal-convo">${convoHTML}</div>
+      <div class="modal-section-label">Generated Pipeline &middot; ${p.lang}</div>
+      <div class="modal-code">
+        <div class="modal-code-dots"><span></span><span></span><span></span></div>
+        <pre>${codeEscaped}</pre>
+      </div>
+    `;
+    document.getElementById('communityModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCard() {
+    document.getElementById('communityModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeCardModal(e) {
+    if (e.target === document.getElementById('communityModal')) closeCard();
+  }
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.anim-fade, .anim-slide-left, .anim-slide-right').forEach(el => observer.observe(el));
+
+  // ── Interactive install demo ──
+  (function () {
+    const container  = document.getElementById('idemoContainer');
+    const jar        = document.getElementById('idemoJar');
+    const fiji       = document.getElementById('idemoFiji');
+    const done       = document.getElementById('idemoDone');
+    const arrowLine  = document.getElementById('idemoArrowLine');
+    const arrowLabel = document.getElementById('idemoArrowLabel');
+
+    let jarDropped = false;
+
+    function initialPositions() {
+      const w = container.offsetWidth;
+      const h = container.offsetHeight;
+      jar.style.left  = Math.round(w * 0.18 - jar.offsetWidth  / 2) + 'px';
+      jar.style.top   = Math.round(h * 0.66 - jar.offsetHeight / 2) + 'px';
+      fiji.style.left = Math.round(w * 0.63 - fiji.offsetWidth / 2) + 'px';
+      fiji.style.top  = Math.round(h * 0.28 - fiji.offsetHeight / 2) + 'px';
+    }
+
+    function rectsOverlap(a, b) {
+      const ar = a.getBoundingClientRect(), br = b.getBoundingClientRect();
+      return !(ar.right < br.left || ar.left > br.right || ar.bottom < br.top || ar.top > br.bottom);
+    }
+
+    function lineRectIntersect(px, py, rect) {
+      const cx = rect.left + rect.width / 2, cy = rect.top + rect.height / 2;
+      const dx = cx - px, dy = cy - py;
+      let tMin = Infinity;
+      const candidates = [
+        dx !== 0 ? (rect.left   - px) / dx : Infinity,
+        dx !== 0 ? (rect.right  - px) / dx : Infinity,
+        dy !== 0 ? (rect.top    - py) / dy : Infinity,
+        dy !== 0 ? (rect.bottom - py) / dy : Infinity,
+      ];
+      for (const t of candidates) {
+        if (t <= 0 || t >= tMin) continue;
+        const ix = px + t * dx, iy = py + t * dy;
+        if (ix >= rect.left - 1 && ix <= rect.right  + 1 &&
+            iy >= rect.top  - 1 && iy <= rect.bottom + 1) tMin = t;
+      }
+      return tMin === Infinity ? { x: cx, y: cy } : { x: px + tMin * dx, y: py + tMin * dy };
+    }
+
+    function updateArrow() {
+      if (jarDropped) return;
+      const cr = container.getBoundingClientRect();
+      const jr = jar.getBoundingClientRect();
+      const fr = fiji.getBoundingClientRect();
+
+      const jarCx = jr.left + jr.width  / 2 - cr.left;
+      const jarCy = jr.top  + jr.height / 2 - cr.top;
+
+      const fijiLocal = {
+        left: fr.left - cr.left, right: fr.right - cr.left,
+        top:  fr.top  - cr.top,  bottom: fr.bottom - cr.top,
+        width: fr.width, height: fr.height,
+      };
+
+      const dist = Math.hypot(
+        fijiLocal.left + fijiLocal.width  / 2 - jarCx,
+        fijiLocal.top  + fijiLocal.height / 2 - jarCy
+      ) || 1;
+      const ux = (fijiLocal.left + fijiLocal.width  / 2 - jarCx) / dist;
+      const uy = (fijiLocal.top  + fijiLocal.height / 2 - jarCy) / dist;
+
+      const border = lineRectIntersect(jarCx, jarCy, fijiLocal);
+      const overlapping = rectsOverlap(jar, fiji);
+
+      arrowLine.style.display     = overlapping ? 'none' : '';
+      arrowLabel.style.visibility = overlapping ? 'hidden' : '';
+      if (overlapping) return;
+
+      const x1 = Math.round(jarCx + ux * 70);
+      const y1 = Math.round(jarCy + uy * 70);
+      const x2 = Math.round(border.x - ux * 8);
+      const y2 = Math.round(border.y - uy * 8);
+
+      arrowLine.setAttribute('x1', x1); arrowLine.setAttribute('y1', y1);
+      arrowLine.setAttribute('x2', x2); arrowLine.setAttribute('y2', y2);
+      arrowLabel.setAttribute('x', Math.round((x1 + x2) / 2 + (-uy) * 36));
+      arrowLabel.setAttribute('y', Math.round((y1 + y2) / 2 + ux  * 36));
+    }
+
+    window.addEventListener('load',   () => { initialPositions(); updateArrow(); });
+    fiji.addEventListener('load',     () => { initialPositions(); updateArrow(); });
+
+    // Fiji: draggable
+    let fijiDown = false, fijiOx, fijiOy;
+    fiji.addEventListener('mousedown', e => {
+      fijiDown = true; fiji.classList.add('is-dragging');
+      const r = fiji.getBoundingClientRect();
+      fijiOx = e.clientX - r.left; fijiOy = e.clientY - r.top;
+      e.preventDefault();
+    });
+    document.addEventListener('mousemove', e => {
+      if (!fijiDown) return;
+      const cr = container.getBoundingClientRect();
+      fiji.style.left = Math.max(0, Math.min(e.clientX - cr.left - fijiOx, cr.width  - fiji.offsetWidth))  + 'px';
+      fiji.style.top  = Math.max(0, Math.min(e.clientY - cr.top  - fijiOy, cr.height - fiji.offsetHeight)) + 'px';
+      updateArrow();
+    });
+    document.addEventListener('mouseup', () => {
+      if (!fijiDown) return;
+      fijiDown = false; fiji.classList.remove('is-dragging');
+    });
+
+    // Jar: draggable + drop detection
+    let jarDown = false, jarOx, jarOy;
+    jar.addEventListener('mousedown', e => {
+      jarDown = true; jar.classList.add('is-dragging');
+      arrowLabel.style.visibility = 'hidden';
+      const r = jar.getBoundingClientRect();
+      jarOx = e.clientX - r.left; jarOy = e.clientY - r.top;
+      e.preventDefault();
+    });
+    document.addEventListener('mousemove', e => {
+      if (!jarDown) return;
+      const cr = container.getBoundingClientRect();
+      jar.style.left = Math.max(0, Math.min(e.clientX - cr.left - jarOx, cr.width  - jar.offsetWidth))  + 'px';
+      jar.style.top  = Math.max(0, Math.min(e.clientY - cr.top  - jarOy, cr.height - jar.offsetHeight)) + 'px';
+      fiji.classList.toggle('drop-target', rectsOverlap(jar, fiji));
+      updateArrow();
+    });
+    document.addEventListener('mouseup', () => {
+      if (!jarDown) return;
+      jarDown = false; jar.classList.remove('is-dragging');
+      fiji.classList.remove('drop-target');
+      if (rectsOverlap(jar, fiji)) {
+        jar.classList.add('dropped');
+        done.classList.add('success');
+        jarDropped = true;
+        arrowLine.style.display = arrowLabel.style.display = 'none';
+        document.getElementById('idemoSuccess').classList.add('visible');
+        const fr = fiji.getBoundingClientRect();
+        launchConfetti(fr.left + fr.width / 2, fr.top + fr.height / 2);
+      } else {
+        arrowLabel.style.visibility = '';
+      }
+    });
+  })();
+
+  function launchConfetti(originX, originY) {
+    const canvas = document.createElement('canvas');
+    canvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+
+    const colors = ['#ff595e','#ffca3a','#6a4c93','#1982c4','#8ac926','#ff924c','#ffffff','#c77dff'];
+    const particles = [];
+
+    for (let i = 0; i < 160; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 4 + Math.random() * 10;
+      particles.push({
+        x: originX, y: originY,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 6,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        w: 6 + Math.random() * 8,
+        h: 4 + Math.random() * 5,
+        rot: Math.random() * Math.PI * 2,
+        rotV: (Math.random() - 0.5) * 0.3,
+        alpha: 1,
+        shape: Math.random() < 0.5 ? 'rect' : 'circle',
+      });
+    }
+
+    let frame;
+    function tick() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let alive = false;
+      for (const p of particles) {
+        p.x  += p.vx;
+        p.y  += p.vy;
+        p.vy += 0.35;
+        p.vx *= 0.99;
+        p.rot += p.rotV;
+        p.alpha -= 0.013;
+        if (p.alpha <= 0) continue;
+        alive = true;
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.fillStyle = p.color;
+        if (p.shape === 'circle') {
+          ctx.beginPath();
+          ctx.arc(0, 0, p.w / 2, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        }
+        ctx.restore();
+      }
+      if (alive) {
+        frame = requestAnimationFrame(tick);
+      } else {
+        canvas.remove();
+      }
+    }
+    frame = requestAnimationFrame(tick);
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quickstart Guide | IJPB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Outfit:wght@800;900&family=Bagel+Fat+One&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="images/icon.png">
+  <style>
+    /* ── Reset & tokens ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --sky:        rgb(124, 188, 238);
+      --sky-deep:   #4189cc;
+      --sky-light:  rgb(155, 208, 245);
+      --white:      #ffffff;
+      --dark:       #1a2332;
+      --glass:      rgba(255,255,255,0.10);
+      --glass-b:    rgba(255,255,255,0.22);
+      --glass-hov:  rgba(255,255,255,0.16);
+      --accent:     rgb(124, 188, 238);
+      --step-done:  rgb(130, 220, 130);
+    }
+
+    /* ── Skip link (accessibility) ── */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 20px;
+      background: var(--dark);
+      color: var(--white);
+      padding: 8px 16px;
+      border-radius: 0 0 8px 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      z-index: 9999;
+      text-decoration: none;
+      transition: top 0.2s;
+    }
+    .skip-link:focus { top: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: linear-gradient(180deg,
+        rgb(124, 188, 238) 0%,
+        rgb(124, 188, 238) 6%,
+        #3b8ad0 22%,
+        #2d6faa 38%,
+        #1f3f6e 58%,
+        #1a2332 80%
+      );
+      background-color: #1a2332;
+      min-height: 100vh;
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── Nav (same as landing) ── */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(20px, 3vw, 60px);
+      height: 60px;
+      background: rgba(124, 188, 238, 0.15);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .topbar-logo {
+      font-family: "Bagel Fat One", system-ui;
+      font-weight: 200;
+      font-size: 1.4rem;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+    }
+
+    .topbar-nav {
+      list-style: none;
+      display: flex;
+      gap: 32px;
+    }
+
+    .topbar-nav a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--white);
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+    .topbar-nav a:hover,
+    .topbar-nav a:focus-visible { opacity: 1; outline: 2px solid rgba(255,255,255,0.5); outline-offset: 4px; border-radius: 4px; }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: 2px solid transparent;
+      cursor: pointer;
+      width: 28px;
+      height: 20px;
+      position: relative;
+      z-index: 200;
+      border-radius: 4px;
+    }
+    .hamburger:focus-visible { border-color: var(--white); }
+    .hamburger span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      position: absolute;
+      left: 0;
+      transition: all 0.3s ease;
+    }
+    .hamburger span:nth-child(1) { top: 0; }
+    .hamburger span:nth-child(2) { top: 9px; }
+    .hamburger span:nth-child(3) { top: 18px; }
+    .hamburger.open span:nth-child(1) { top: 9px; transform: rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { top: 9px; transform: rotate(-45deg); }
+
+    .mobile-nav {
+      position: fixed;
+      inset: 0;
+      z-index: 150;
+      background: rgba(26, 35, 50, 0.96);
+      backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .mobile-nav.open { opacity: 1; pointer-events: auto; }
+    .mobile-nav ul { list-style: none; text-align: center; }
+    .mobile-nav li { margin-bottom: 28px; }
+    .mobile-nav a {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.6rem;
+      color: var(--white);
+      text-decoration: none;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+    .mobile-nav a:hover { opacity: 1; }
+    body.nav-open { overflow: hidden; }
+
+    /* ── Hero ── */
+    .qs-hero {
+      padding: 120px clamp(24px, 4vw, 80px) 80px;
+      text-align: center;
+      position: relative;
+    }
+
+    .qs-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: min(700px, 90%);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    }
+
+    .qs-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sky-light);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.1s ease forwards;
+    }
+
+    .qs-eyebrow::before,
+    .qs-eyebrow::after {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.5;
+    }
+
+    .qs-hero h1 {
+      font-family: 'Bagel Fat One', sans-serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      margin-bottom: 22px;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.2s ease forwards;
+    }
+
+    .qs-hero p {
+      font-size: clamp(1rem, 1.4vw, 1.2rem);
+      opacity: 0;
+      max-width: 520px;
+      margin: 0 auto 36px;
+      line-height: 1.6;
+      animation: fadeUp 0.7s 0.32s ease forwards;
+    }
+
+    .qs-chapter-pills {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.44s ease forwards;
+    }
+
+    .qs-chapter-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 16px;
+      background: var(--glass);
+      border: 1px solid var(--glass-b);
+      border-radius: 100px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 0.8rem;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: background 0.2s, transform 0.2s;
+      backdrop-filter: blur(10px);
+    }
+    .qs-chapter-pill:hover,
+    .qs-chapter-pill:focus-visible {
+      background: var(--glass-hov);
+      transform: translateY(-2px);
+      outline: 2px solid rgba(255,255,255,0.4);
+      outline-offset: 3px;
+    }
+
+    .qs-chapter-pill-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      opacity: 0.55;
+      font-weight: 400;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── Main layout (sidebar + content) ── */
+    .qs-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 0;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 60px clamp(20px, 3vw, 48px) 100px;
+      align-items: start;
+    }
+
+    /* ── Sticky sidebar ── */
+    .qs-sidebar {
+      position: sticky;
+      top: 80px;
+      padding-right: 32px;
+    }
+
+    .qs-sidebar-label {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.4;
+      margin-bottom: 16px;
+    }
+
+    .qs-sidebar-nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .qs-sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      opacity: 0.55;
+      transition: opacity 0.2s, background 0.2s;
+      position: relative;
+    }
+
+    .qs-sidebar-nav a:hover,
+    .qs-sidebar-nav a:focus-visible {
+      opacity: 1;
+      background: rgba(255,255,255,0.07);
+      outline: none;
+    }
+
+    .qs-sidebar-nav a.active {
+      opacity: 1;
+      background: rgba(124, 188, 238, 0.12);
+      color: var(--sky-light);
+    }
+
+    .qs-sidebar-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      opacity: 0.45;
+      flex-shrink: 0;
+      width: 18px;
+      text-align: right;
+    }
+
+    .qs-sidebar-nav a.active .qs-sidebar-num { opacity: 0.7; color: var(--sky-light); }
+
+    /* ── Content area ── */
+    .qs-content { min-width: 0; }
+
+    /* ── Chapter blocks ── */
+    .qs-chapter {
+      margin-bottom: 80px;
+      scroll-margin-top: 80px;
+    }
+
+    .qs-chapter-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .qs-chapter-index {
+      font-family: 'Bagel Fat One', sans-serif;
+      font-size: 4rem;
+      line-height: 1;
+      opacity: 0.08;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .qs-chapter h2 {
+      font-family: 'Bagel Fat One', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+    }
+
+    /* ── Step timeline ── */
+    .qs-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+
+    .qs-steps::before {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.04) 100%);
+    }
+
+    .qs-step {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 0 20px;
+      position: relative;
+    }
+
+    .qs-step-dot-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 3px;
+    }
+
+    .qs-step-dot {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(124, 188, 238, 0.12);
+      border: 1px solid rgba(124, 188, 238, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--sky-light);
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .qs-step:hover .qs-step-dot {
+      background: rgba(124, 188, 238, 0.22);
+      border-color: rgba(124, 188, 238, 0.6);
+    }
+
+    .qs-step-body {
+      padding: 4px 0 32px;
+    }
+
+    .qs-step:last-child .qs-step-body { padding-bottom: 8px; }
+
+    .qs-step-text {
+      font-size: 0.97rem;
+      line-height: 1.6;
+      opacity: 0.88;
+    }
+
+    .qs-step-text strong {
+      color: var(--sky-light);
+      font-weight: 600;
+    }
+
+    .qs-step-text em {
+      opacity: 0.7;
+      font-style: italic;
+    }
+
+    /* Optional badge on a step */
+    .qs-step-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 8px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sky-light);
+      opacity: 0.7;
+      padding: 3px 9px;
+      border-radius: 100px;
+      border: 1px solid rgba(155, 208, 245, 0.25);
+      background: rgba(155, 208, 245, 0.06);
+    }
+
+    /* Download CTA inside step */
+    .qs-inline-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 10px 20px;
+      border: 2px solid var(--white);
+      border-radius: 12px;
+      background: rgba(155, 208, 245, 0.2);
+      color: var(--white);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 0.82rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
+      box-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+    }
+    .qs-inline-cta:hover,
+    .qs-inline-cta:focus-visible {
+      background: var(--white);
+      color: var(--sky-deep);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      outline: none;
+    }
+
+    /* ── Tip callout ── */
+    .qs-tip {
+      margin: 8px 0 20px;
+      padding: 12px 16px;
+      background: rgba(124, 188, 238, 0.08);
+      border-left: 3px solid rgba(124, 188, 238, 0.5);
+      border-radius: 0 10px 10px 0;
+      font-size: 0.85rem;
+      line-height: 1.55;
+      opacity: 0.85;
+    }
+
+    .qs-tip strong {
+      font-weight: 700;
+      color: var(--sky-light);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    /* ── Warning callout ── */
+    .qs-warning {
+      margin: 8px 0 20px;
+      padding: 12px 16px;
+      background: rgba(255, 200, 80, 0.07);
+      border-left: 3px solid rgba(255, 200, 80, 0.45);
+      border-radius: 0 10px 10px 0;
+      font-size: 0.85rem;
+      line-height: 1.55;
+      opacity: 0.85;
+    }
+
+    .qs-warning strong {
+      font-weight: 700;
+      color: rgb(255, 210, 100);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    /* ── Action cards (for Manage section) ── */
+    .qs-action-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .qs-action-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-b);
+      border-radius: 16px;
+      padding: 22px 20px;
+      backdrop-filter: blur(10px);
+      transition: transform 0.25s, background 0.25s;
+    }
+    .qs-action-card:hover { transform: translateY(-3px); background: var(--glass-hov); }
+
+    .qs-action-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      color: var(--sky-light);
+    }
+
+    .qs-action-card h3 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+
+    .qs-action-card p {
+      font-size: 0.82rem;
+      line-height: 1.5;
+      opacity: 0.65;
+    }
+
+    /* ── Chapter divider ── */
+    .qs-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      margin-bottom: 80px;
+    }
+
+    /* ── Scroll animations ── */
+    .anim-fade {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .anim-fade.visible { opacity: 1; transform: none; }
+
+    /* ── Footer (matching landing) ── */
+    .site-footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 60px clamp(40px, 5vw, 100px) 30px;
+      background: rgba(0,0,0,0.15);
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1.2fr 2fr;
+      gap: 60px;
+      max-width: 1100px;
+      margin: 0 auto 40px;
+    }
+
+    .footer-brand p {
+      margin-top: 12px;
+      font-size: 0.85rem;
+      opacity: 0.5;
+      line-height: 1.5;
+      max-width: 260px;
+    }
+
+    .footer-links { display: flex; gap: 48px; flex-wrap: wrap; }
+
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 120px;
+    }
+
+    .footer-col h4 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.5;
+      margin-bottom: 4px;
+    }
+
+    .footer-col a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.88rem;
+      opacity: 0.65;
+      transition: opacity 0.2s;
+    }
+    .footer-col a:hover,
+    .footer-col a:focus-visible { opacity: 1; outline: none; text-decoration: underline; text-underline-offset: 3px; }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.78rem;
+      opacity: 0.35;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 860px) {
+      .topbar-nav { display: none; }
+      .hamburger { display: block; }
+
+      .qs-layout {
+        grid-template-columns: 1fr;
+        padding-top: 40px;
+      }
+
+      .qs-sidebar { display: none; }
+
+      .qs-chapter-index { font-size: 2.5rem; }
+
+      .footer-inner { grid-template-columns: 1fr; gap: 36px; }
+    }
+
+    @media (max-width: 560px) {
+      .qs-hero { padding-top: 100px; }
+      .qs-hero h1 { font-size: 2.8rem; }
+      .qs-chapter-pills { gap: 8px; }
+      .qs-chapter-pill { font-size: 0.74rem; padding: 7px 13px; }
+    }
+
+    /* ── Focus ring (global accessibility) ── */
+    :focus-visible {
+      outline: 2px solid rgba(155, 208, 245, 0.8);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Skip to main content -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- NAV -->
+<nav class="topbar" aria-label="Site navigation">
+  <a href="index.html" class="topbar-logo" aria-label="IJPB home">IJPB</a>
+  <ul class="topbar-nav" role="list">
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="index.html#use-cases">Use Cases</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="quickstart.html" aria-current="page">Docs</a></li>
+    <li><a href="index.html#contact-footer">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav" role="dialog" aria-label="Mobile menu" aria-modal="true">
+  <ul role="list">
+    <li><a href="index.html#features" onclick="closeMobile()">Features</a></li>
+    <li><a href="index.html#use-cases" onclick="closeMobile()">Use Cases</a></li>
+    <li><a href="pricing.html" onclick="closeMobile()">Pricing</a></li>
+    <li><a href="quickstart.html" onclick="closeMobile()">Docs</a></li>
+    <li><a href="index.html#contact-footer" onclick="closeMobile()">Contact</a></li>
+  </ul>
+</div>
+
+<!-- HERO -->
+<header class="qs-hero" role="banner">
+  <p class="qs-eyebrow" aria-hidden="true">Quickstart Guide</p>
+  <h1>Up and running<br>in minutes</h1>
+  <p>Install IJPB, build your first pipeline, and automate your ImageJ workflow — all from a single chat window.</p>
+
+  <nav aria-label="Page sections" class="qs-chapter-pills">
+    <a href="#install" class="qs-chapter-pill">
+      <span class="qs-chapter-pill-num">01</span> Installation
+    </a>
+    <a href="#build" class="qs-chapter-pill">
+      <span class="qs-chapter-pill-num">02</span> Build a Pipeline
+    </a>
+    <a href="#manage" class="qs-chapter-pill">
+      <span class="qs-chapter-pill-num">03</span> Manage Pipelines
+    </a>
+    <a href="#edit" class="qs-chapter-pill">
+      <span class="qs-chapter-pill-num">04</span> Edit a Pipeline
+    </a>
+  </nav>
+</header>
+
+<!-- MAIN CONTENT -->
+<main id="main-content">
+  <div class="qs-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="qs-sidebar" aria-label="Section navigation">
+      <p class="qs-sidebar-label">On this page</p>
+      <nav aria-label="Quickstart sections">
+        <ul class="qs-sidebar-nav" role="list" id="sidebarNav">
+          <li>
+            <a href="#install" class="active">
+              <span class="qs-sidebar-num">01</span>
+              Installation
+            </a>
+          </li>
+          <li>
+            <a href="#build">
+              <span class="qs-sidebar-num">02</span>
+              Build a Pipeline
+            </a>
+          </li>
+          <li>
+            <a href="#manage">
+              <span class="qs-sidebar-num">03</span>
+              Manage Pipelines
+            </a>
+          </li>
+          <li>
+            <a href="#edit">
+              <span class="qs-sidebar-num">04</span>
+              Edit a Pipeline
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- CONTENT -->
+    <div class="qs-content">
+
+      <!-- ── 01 INSTALLATION ── -->
+      <section class="qs-chapter anim-fade" id="install" aria-labelledby="install-heading">
+        <header class="qs-chapter-header">
+          <span class="qs-chapter-index" aria-hidden="true">01</span>
+          <h2 id="install-heading">Installation</h2>
+        </header>
+
+        <ol class="qs-steps" aria-label="Installation steps">
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">1</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">Download the plugin</p>
+              <a href="https://github.com/buswinka/ijpb/releases/latest/download/ImageJPipelineBuilder.jar" class="qs-inline-cta" aria-label="Download IJPB plugin JAR file">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download IJPB.jar
+              </a>
+            </div>
+          </li>
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">2</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">Open <strong>ImageJ</strong> (or Fiji)</p>
+            </div>
+          </li>
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">3</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">
+                Drag and drop <strong>ImageJPipelineBuilder.jar</strong> into your open ImageJ window
+              </p>
+              <div class="qs-tip">
+                <strong>Tip</strong>
+                Drop the JAR directly onto the ImageJ toolbar — not into a canvas or results window.
+              </div>
+            </div>
+          </li>
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">4</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text"><strong>Restart ImageJ</strong> to complete the installation</p>
+            </div>
+          </li>
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">5</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">
+                Verify it worked — you should see a new menu item: <strong>Pipelines</strong> in the top menu bar
+              </p>
+            </div>
+          </li>
+
+        </ol>
+      </section>
+
+      <div class="qs-divider" aria-hidden="true"></div>
+
+      <!-- ── 02 BUILD A PIPELINE ── -->
+      <section class="qs-chapter anim-fade" id="build" aria-labelledby="build-heading">
+        <header class="qs-chapter-header">
+          <span class="qs-chapter-index" aria-hidden="true">02</span>
+          <h2 id="build-heading">Build a Pipeline</h2>
+        </header>
+
+        <ol class="qs-steps" aria-label="Steps to build a pipeline">
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">1</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">
+                In the top menu, click <strong>Pipelines</strong> → <strong>New</strong>
+              </p>
+            </div>
+          </li>
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">2</div>
+            </div>
+            <div class="qs-step-body">
+              <div class="qs-step-badge">Optional</div>
+              <p class="qs-step-text">
+                Open an example image you'd like to analyze — the AI can see the images you have open
+              </p>
+            </div>
+          </li>
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">3</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">
+                Describe what you want in the <strong>chat window</strong>, in plain English
+              </p>
+              <div class="qs-tip">
+                <strong>Example prompts</strong>
+                "Count DAPI-stained nuclei and export a results table" · "Measure fluorescence intensity per cell in channel 2" · "Segment HeLa cells using CellPose"
+              </div>
+            </div>
+          </li>
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">4</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">
+                Chat back and forth — the AI will ask clarifying questions about your images and what you need
+              </p>
+            </div>
+          </li>
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">5</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">
+                The AI will <strong>automatically write a script</strong> once it has enough detail
+              </p>
+            </div>
+          </li>
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">6</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">
+                Hit <strong>Run</strong> to execute the script on your currently open image
+              </p>
+            </div>
+          </li>
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">7</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">
+                Verify the script runs correctly
+              </p>
+              <div class="qs-warning">
+                <strong>Heads up</strong>
+                AI can make mistakes. Always sanity-check results before processing your full dataset.
+              </div>
+            </div>
+          </li>
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">8</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">
+                If there are errors, the AI will <strong>fix them automatically</strong> — keep chatting until it's right
+              </p>
+            </div>
+          </li>
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">9</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">
+                Once you're happy, hit <strong>Save</strong> to name your pipeline and add it to the ImageJ menu
+              </p>
+            </div>
+          </li>
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">10</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">
+                Run it again anytime via <strong>Pipelines</strong> → <em>your pipeline name</em> in the dropdown
+              </p>
+            </div>
+          </li>
+
+        </ol>
+      </section>
+
+      <div class="qs-divider" aria-hidden="true"></div>
+
+      <!-- ── 03 MANAGE PIPELINES ── -->
+      <section class="qs-chapter anim-fade" id="manage" aria-labelledby="manage-heading">
+        <header class="qs-chapter-header">
+          <span class="qs-chapter-index" aria-hidden="true">03</span>
+          <h2 id="manage-heading">Manage Pipelines</h2>
+        </header>
+
+        <ol class="qs-steps" aria-label="Steps to manage pipelines">
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">1</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">Click <strong>Pipelines</strong> → <strong>Manage</strong> to open your pipeline library</p>
+            </div>
+          </li>
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">2</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">Find the pipeline you want and click on it to select it</p>
+            </div>
+          </li>
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">3</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">Choose what to do with it:</p>
+              <div class="qs-action-cards" role="list">
+                <div class="qs-action-card" role="listitem">
+                  <div class="qs-action-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  </div>
+                  <h3>Edit / Resume</h3>
+                  <p>Opens your previous chat so you can continue refining the pipeline</p>
+                </div>
+                <div class="qs-action-card" role="listitem">
+                  <div class="qs-action-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                  </div>
+                  <h3>Delete</h3>
+                  <p>Permanently removes the pipeline from your menu</p>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <div class="qs-divider" aria-hidden="true"></div>
+
+      <!-- ── 04 EDIT A PIPELINE ── -->
+      <section class="qs-chapter anim-fade" id="edit" aria-labelledby="edit-heading">
+        <header class="qs-chapter-header">
+          <span class="qs-chapter-index" aria-hidden="true">04</span>
+          <h2 id="edit-heading">Edit a Pipeline</h2>
+        </header>
+
+        <ol class="qs-steps" aria-label="Steps to edit a pipeline">
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">1</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">Click <strong>Pipelines</strong> → <strong>Manage</strong></p>
+            </div>
+          </li>
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">2</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">Find the pipeline you want to change and click on it</p>
+            </div>
+          </li>
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">3</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">Hit <strong>Edit / Resume</strong> to reopen your previous conversation</p>
+            </div>
+          </li>
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">4</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">
+                Describe the changes you need — the AI has full context of the original script
+              </p>
+              <div class="qs-tip">
+                <strong>Good change prompts</strong>
+                "Add background subtraction before thresholding" · "Also export a CSV with per-cell measurements" · "Change the particle size filter to 50–500 µm²"
+              </div>
+            </div>
+          </li>
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">5</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">Hit <strong>Run</strong> to test the updated script on your open image</p>
+            </div>
+          </li>
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">6</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">Keep chatting until the results look right</p>
+            </div>
+          </li>
+
+          <li class="qs-step">
+            <div class="qs-step-dot-col" aria-hidden="true">
+              <div class="qs-step-dot">7</div>
+            </div>
+            <div class="qs-step-body">
+              <p class="qs-step-text">Hit <strong>Update</strong> to save the revised script back to your menu</p>
+            </div>
+          </li>
+
+        </ol>
+      </section>
+
+    </div><!-- /qs-content -->
+  </div><!-- /qs-layout -->
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer" id="contact-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="topbar-logo" aria-label="IJPB home">IJPB</a>
+      <p>AI-powered pipeline builder for ImageJ. Built for researchers, by researchers.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="index.html#features">Features</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="index.html#use-cases">Use Cases</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="quickstart.html" aria-current="page">Quickstart</a>
+        <a href="#">API Reference</a>
+        <a href="#">Video Tutorials</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 IJPB. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+    document.body.classList.toggle('nav-open');
+    hamburger.setAttribute('aria-expanded', isOpen);
+    hamburger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+  });
+
+  function closeMobile() {
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+    document.body.classList.remove('nav-open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.setAttribute('aria-label', 'Open menu');
+  }
+
+  // Close mobile nav on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && mobileNav.classList.contains('open')) closeMobile();
+  });
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.anim-fade').forEach(el => observer.observe(el));
+
+  // Active sidebar link on scroll
+  const chapters = document.querySelectorAll('.qs-chapter');
+  const sidebarLinks = document.querySelectorAll('#sidebarNav a');
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        sidebarLinks.forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-60px 0px -60% 0px', threshold: 0 });
+
+  chapters.forEach(section => sectionObserver.observe(section));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EGCCXG503Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EGCCXG503Y');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing | IJPB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Outfit:wght@800;900&family=Bagel+Fat+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/landing_page.css">
+  <link rel="stylesheet" href="css/pricing.css">
+  <link rel="icon" type="image/png" href="images/icon.png">
+</head>
+<body class="pricing-page">
+
+<!-- NAV -->
+<nav class="topbar">
+  <a href="index.html" class="topbar-logo">IJPB</a>
+  <ul class="topbar-nav">
+    <li><a href="landing_page.html#features">Features</a></li>
+    <li><a href="landing_page.html#use-cases">Use Cases</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="landing_page.html#docs-teaser">Docs</a></li>
+    <li><a href="#contact-footer">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <ul>
+    <li><a href="landing_page.html#features" onclick="closeMobile()">Features</a></li>
+    <li><a href="landing_page.html#use-cases" onclick="closeMobile()">Use Cases</a></li>
+    <li><a href="pricing.html" onclick="closeMobile()">Pricing</a></li>
+    <li><a href="landing_page.html#docs-teaser" onclick="closeMobile()">Docs</a></li>
+    <li><a href="#contact-footer" onclick="closeMobile()">Contact</a></li>
+  </ul>
+</div>
+
+<!-- PRICING HERO -->
+<section class="pricing-hero">
+  <h1 class="anim-fade">ImageJ is free.<br>So is getting started.</h1>
+  <p class="anim-fade">Pro-Tier supports development and covers API cost.</p>
+
+  <!-- BILLING TOGGLE -->
+  <div class="billing-toggle anim-fade" id="billingToggle" onclick="toggleBilling()">
+    <span id="labelMonthly" class="active">Monthly</span>
+    <div class="toggle-track" id="toggleTrack">
+      <div class="toggle-thumb"></div>
+    </div>
+    <span id="labelAnnual">Annual</span>
+    <span class="save-badge" id="saveBadge">Save $12</span>
+  </div>
+</section>
+
+<!-- PRICING CARDS -->
+<section class="pricing-section">
+  <img class="pricing-cloud-left"  src="images/cloud_dither.png" alt="">
+  <img class="pricing-cloud-right" src="images/cloud_dither.png" alt="">
+  <div class="pricing-grid">
+
+    <!-- FREE -->
+    <div class="plan-card anim-fade">
+      <div class="plan-name">Community</div>
+
+      <div class="plan-price price-monthly"><span>$0</span></div>
+      <div class="plan-price price-annual"><span>$0</span></div>
+
+      <p class="plan-tagline">Start automating your analysis today.</p>
+      <hr class="plan-divider">
+      <ul class="plan-features">
+        <li>ImageJ macro pipelines</li>
+        <li>25 free credits <span class="credit-hint" title="1 credit = 1 pipeline generation or edit. A multi-turn refinement uses 1 credit per AI response.">&#9432;</span></li>
+        <li>Bring your own API key for unlimited use</li>
+        <li>Batch processing</li>
+        <li class="muted">Python integration</li>
+      </ul>
+      <a href="#" class="plan-cta">Get Started Free</a>
+    </div>
+
+    <!-- PRO -->
+    <div class="plan-card featured anim-fade">
+      <div class="popular-badge">Most Popular</div>
+      <div class="plan-name">Pro</div>
+
+      <div class="plan-price price-monthly">
+        <span class="currency">$</span><span>6</span><span class="period">/mo</span>
+      </div>
+      <div class="plan-price price-annual">
+        <span class="currency">$</span><span>5</span><span class="period">/mo</span>
+        <span class="annual-note">$60 billed annually</span>
+      </div>
+
+      <p class="plan-tagline">For researchers with serious workflows.</p>
+      <hr class="plan-divider">
+      <ul class="plan-features">
+        <li>Everything in Community, plus:</li>
+        <li>100 credits / day <span class="credit-hint" title="1 credit = 1 pipeline generation or edit. A multi-turn refinement uses 1 credit per AI response.">&#9432;</span></li>
+        <li>No API key needed — we host the LLM</li>
+        <li>Python plugin support (CellPose, scikit-image, &amp; more)</li>
+        <li>Priority support</li>
+      </ul>
+      <a href="#" class="plan-cta">Start Pro — Cancel Anytime</a>
+    </div>
+
+    <!-- LAB -->
+    <div class="plan-card lab anim-fade">
+      <div class="plan-name">Lab</div>
+
+      <div class="plan-price plan-price-custom price-monthly"><span>Let's talk</span></div>
+      <div class="plan-price plan-price-custom price-annual"><span>Let's talk</span></div>
+
+      <p class="plan-tagline">For labs, cores, and institutions that need team-wide access.</p>
+      <hr class="plan-divider">
+      <ul class="plan-features">
+        <li>Everything in Pro, plus:</li>
+        <li>Team-wide access with admin controls</li>
+        <li>Dedicated onboarding &amp; training session</li>
+        <li>Volume pricing for large groups</li>
+        <li>Invoice &amp; PO billing available</li>
+      </ul>
+      <a href="mailto:hello@ijpb.dev" class="plan-cta">Contact Us</a>
+    </div>
+
+  </div>
+
+  <!-- CREDIT EXPLAINER -->
+  <!-- <div class="credit-explainer anim-fade">
+    <strong>What's a credit?</strong> &nbsp;1 credit = 1 AI-generated pipeline or edit. Each message in a multi-turn refinement uses 1 credit. Batch runs don't cost credits — only the initial pipeline creation does.
+  </div> -->
+
+  <div class="pricing-divider"></div>
+
+  <!-- FAQ -->
+  <div class="faq-section anim-fade">
+    <h2 class="faq-title">Frequently asked questions</h2>
+
+    <div class="faq-group">
+      <h3 class="faq-group-label">Credits &amp; Usage</h3>
+
+      <details class="faq-item" open>
+        <summary>What's a credit?</summary>
+        <p>1 credit = 1 AI-generated pipeline or edit. Each message in a multi-turn refinement uses 1 credit. Batch runs don't cost credits — only the initial pipeline creation does.</p>
+      </details>
+
+      <details class="faq-item" open>
+        <summary>Do unused credits roll over?</summary>
+        <p>No — credits reset daily on the Pro plan. The 25 free credits on Community are one-time and don't expire unless you bring your own API key, in which case there's no credit limit at all.</p>
+      </details>
+
+      <details class="faq-item" open>
+        <summary>What happens when I run out of credits?</summary>
+        <p>You'll be prompted to upgrade or add your own API key. Any pipelines you've already generated remain saved and runnable — you just can't generate new ones until credits renew or you upgrade.</p>
+      </details>
+    </div>
+
+    <div class="faq-group">
+      <h3 class="faq-group-label">Plans &amp; Billing</h3>
+
+      <details class="faq-item" open>
+        <summary>What's the difference between bringing my own API key and Pro?</summary>
+        <p>With your own key (available on Community), you're billed directly by your AI provider (e.g. Anthropic or OpenAI) at their rates. Pro bundles hosted inference into the subscription — no separate API account needed, and we handle rate limits and model updates for you.</p>
+      </details>
+
+      <details class="faq-item" open>
+        <summary>Can I cancel anytime?</summary>
+        <p>Yes. Cancel from your account settings at any time. You'll keep Pro access through the end of your billing period with no further charges.</p>
+      </details>
+
+      <details class="faq-item" open>
+        <summary>Do you offer discounts for students or academic labs?</summary>
+        <p>Yes — contact us at <a href="mailto:hello@ijpb.dev">hello@ijpb.dev</a> with your institutional email for academic pricing. Labs and core facilities with multiple users should look at the Lab plan, which includes volume pricing.</p>
+      </details>
+    </div>
+
+    <div class="faq-group">
+      <h3 class="faq-group-label">Privacy &amp; Data</h3>
+
+      <details class="faq-item" open>
+        <summary>Is my data used to train AI models?</summary>
+        <p>No. Your images, pipelines, and prompts are never used to train or fine-tune any AI model — by us or by our infrastructure providers.</p>
+      </details>
+
+      <details class="faq-item" open>
+        <summary>Where are my images processed?</summary>
+        <p>Pipeline generation runs in the cloud, but your images stay local unless you explicitly upload one for context. The generated macro or Python script is executed entirely inside ImageJ on your own machine.</p>
+      </details>
+    </div>
+  </div>
+
+  <!-- TRUST SIGNALS -->
+  <div class="pricing-trust anim-fade">
+    <span>No credit card required for Free tier.</span>
+    <span>Cancel anytime.</span>
+    <span>Your data is never used for training.</span>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer" id="contact-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="topbar-logo">IJPB</a>
+      <p>AI-powered pipeline builder for ImageJ. Built for researchers, by researchers.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="landing_page.html#features">Features</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="landing_page.html#use-cases">Use Cases</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="#">Documentation</a>
+        <a href="#">Quickstart</a>
+        <a href="#">API Reference</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 IJPB. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+  let isAnnual = false;
+  function toggleBilling() {
+    isAnnual = !isAnnual;
+    document.body.classList.toggle('annual', isAnnual);
+    document.getElementById('toggleTrack').classList.toggle('annual', isAnnual);
+    document.getElementById('labelMonthly').classList.toggle('active', !isAnnual);
+    document.getElementById('labelAnnual').classList.toggle('active', isAnnual);
+    document.getElementById('saveBadge').classList.toggle('visible', isAnnual);
+  }
+
+  // Mobile nav
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+    document.body.classList.toggle('nav-open');
+  });
+  function closeMobile() {
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+    document.body.classList.remove('nav-open');
+  }
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.anim-fade').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
