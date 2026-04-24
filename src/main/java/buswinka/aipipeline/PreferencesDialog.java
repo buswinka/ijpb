@@ -25,6 +25,7 @@ public class PreferencesDialog extends JDialog {
     private static final String PREF_LICENSE_KEY     = "aipipeline.license.key";
     private static final String PREF_CLAUDE_THINKING = "aipipeline.claude.thinking";
     private static final String PREF_OLLAMA_TAGS_URL = "aipipeline.ollama.tagsurl";
+    private static final String PREF_AUTO_UPDATE     = PluginUpdater.PREF_AUTO_UPDATE;
 
     // Default models per backend
     private static final String[] BACKENDS = {"IJBP Cloud", "Claude", "OpenAI", "Ollama"};
@@ -41,6 +42,7 @@ public class PreferencesDialog extends JDialog {
     private JTextField                      modelField;
     private JTextField                      licenseKeyField;
     private JTextField                      timeoutField;
+    private JCheckBox                       autoUpdateCheckBox;
     private JCheckBox                       thinkingCheckBox;    // Claude only
     private JLabel                          thinkingLabel;
     private JTextField                      ollamaTagsUrlField;  // Ollama only
@@ -107,6 +109,13 @@ public class PreferencesDialog extends JDialog {
         form.add(new JLabel("Timeout (ms):"), lc);
         timeoutField = new JTextField("300000", 24);
         form.add(timeoutField, fc);
+
+        // Auto-update
+        lc.gridy = row; fc.gridy = row++;
+        form.add(new JLabel("Auto-update:"), lc);
+        autoUpdateCheckBox = new JCheckBox("Automatically install updates on next restart");
+        autoUpdateCheckBox.setSelected(true);
+        form.add(autoUpdateCheckBox, fc);
 
         // Extended Thinking (Claude only)
         lc.gridy = row; fc.gridy = row++;
@@ -201,6 +210,7 @@ public class PreferencesDialog extends JDialog {
         }
         modelField.setText(model);
 
+        autoUpdateCheckBox.setSelected(Prefs.get(PREF_AUTO_UPDATE, true));
         thinkingCheckBox.setSelected(!"false".equals(Prefs.get(PREF_CLAUDE_THINKING, "true")));
         ollamaTagsUrlField.setText(Prefs.get(PREF_OLLAMA_TAGS_URL, OllamaClient.DEFAULT_TAGS_ENDPOINT));
 
@@ -228,6 +238,7 @@ public class PreferencesDialog extends JDialog {
         // Save license key via TierManager (always save — empty string clears Pro status)
         TierManager.setLicenseKey(licKey);
 
+        Prefs.set(PREF_AUTO_UPDATE, autoUpdateCheckBox.isSelected());
         Prefs.set(PREF_CLAUDE_THINKING, thinkingCheckBox.isSelected() ? "true" : "false");
         Prefs.set(PREF_OLLAMA_TAGS_URL, ollamaTagsUrlField.getText().trim());
 
@@ -369,6 +380,10 @@ public class PreferencesDialog extends JDialog {
         try {
             Object previousSelection = pythonEnvCombo.getSelectedItem();
             pythonEnvCombo.removeAllItems();
+
+            // Managed venv is always first
+            pythonEnvCombo.addItem(new CondaFinder.CondaEnv("Plugin Default", ManagedVenv.getPythonPath()));
+
             for (CondaFinder.CondaEnv env : CondaFinder.listEnvironments()) {
                 pythonEnvCombo.addItem(env);
             }
@@ -382,6 +397,14 @@ public class PreferencesDialog extends JDialog {
     /** Selects the combo entry whose pythonPath matches the saved pref, or falls back to Custom. */
     private void syncPythonSelection() {
         String saved = PythonExecutor.getPythonPath();
+
+        // First-run: pref is the bare default — auto-select "Plugin Default"
+        if (saved == null || saved.trim().isEmpty() || "python3".equals(saved.trim()) || "python".equals(saved.trim())) {
+            pythonEnvCombo.setSelectedIndex(0); // "Plugin Default" is always index 0
+            pythonCustomField.setVisible(false);
+            return;
+        }
+
         for (int i = 0; i < pythonEnvCombo.getItemCount(); i++) {
             Object item = pythonEnvCombo.getItemAt(i);
             if (item instanceof CondaFinder.CondaEnv
@@ -391,7 +414,8 @@ public class PreferencesDialog extends JDialog {
                 return;
             }
         }
-        // No conda env matched — show custom field with saved path
+
+        // No known env matched — show custom field with saved path
         pythonEnvCombo.setSelectedItem("Custom...");
         pythonCustomField.setText(saved);
         pythonCustomField.setVisible(true);
