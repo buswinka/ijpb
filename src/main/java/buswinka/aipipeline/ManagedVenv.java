@@ -44,7 +44,7 @@ public class ManagedVenv {
 
     private static String findUnixPython() {
         String which = runCapture("which", "python3");
-        if (which != null) return which;
+        if (which != null && new File(which).exists()) return which;
         for (String c : new String[]{
                 "/usr/bin/python3",
                 "/usr/local/bin/python3",
@@ -101,9 +101,8 @@ public class ManagedVenv {
             Process p = new ProcessBuilder(cmd).redirectErrorStream(true).start();
             Thread drain = new Thread(new Runnable() {
                 public void run() {
-                    try {
+                    try (InputStream in = p.getInputStream()) {
                         byte[] buf = new byte[4096];
-                        InputStream in = p.getInputStream();
                         while (in.read(buf) != -1) {}
                     } catch (IOException ignored) {}
                 }

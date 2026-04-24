@@ -53,7 +53,7 @@ public class ManagedVenvTest {
     }
 
     @Test
-    public void testInitialStateIsNotNull() {
-        assertNotNull(ManagedVenv.getState());
+    public void testInitialStateIsUninitialized() {
+        assertEquals(ManagedVenv.State.UNINITIALIZED, ManagedVenv.getState());
     }
 }
