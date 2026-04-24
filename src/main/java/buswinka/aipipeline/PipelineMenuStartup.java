@@ -28,6 +28,7 @@ public class PipelineMenuStartup implements PlugIn {
         cleanIjpbTmpDir();
         new PipelineManager().reinjectAllMenuItems();
         PluginUpdater.checkAsync();
+        ManagedVenv.ensureAsync();
     }
 
     /**
