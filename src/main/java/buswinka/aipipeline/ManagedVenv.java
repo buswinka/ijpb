@@ -31,7 +31,65 @@ public class ManagedVenv {
         return new File(getVenvDir(), rel).getAbsolutePath();
     }
 
-    // ensureAsync() and doEnsure() come in Task 2.
+    public static synchronized void ensureAsync() {
+        if (started) return;
+        started = true;
+        Thread t = new Thread(new Runnable() { public void run() { doEnsure(); } }, "ijpb-managed-venv");
+        t.setDaemon(true);
+        t.start();
+    }
+
+    private static void doEnsure() {
+        try {
+            String systemPython = findSystemPython();
+            if (systemPython == null) {
+                DebugLog.log("ManagedVenv", "No system Python found — managed venv unavailable");
+                state = State.FAILED;
+                return;
+            }
+            DebugLog.log("ManagedVenv", "System Python: %s", systemPython);
+
+            state = State.CREATING;
+            File venvDir = getVenvDir();
+            if (!new File(getPythonPath()).exists()) {
+                DebugLog.log("ManagedVenv", "Creating venv at %s", venvDir.getAbsolutePath());
+                if (venvDir.getParentFile() != null) venvDir.getParentFile().mkdirs();
+                int venvExit = runDrain(systemPython, "-m", "venv", venvDir.getAbsolutePath());
+                if (venvExit != 0) {
+                    DebugLog.log("ManagedVenv", "venv creation failed (exit %d)", venvExit);
+                    state = State.FAILED;
+                    return;
+                }
+            }
+
+            state = State.INSTALLING;
+            DebugLog.log("ManagedVenv", "pip installing baseline packages");
+            List<String> cmd = new ArrayList<>();
+            cmd.add(getPythonPath());
+            cmd.add("-m"); cmd.add("pip"); cmd.add("install"); cmd.add("-q");
+            for (String pkg : BASELINE_PACKAGES) cmd.add(pkg);
+            int pipExit = runDrain(cmd.toArray(new String[0]));
+            if (pipExit != 0) {
+                DebugLog.log("ManagedVenv", "pip install failed (exit %d)", pipExit);
+                state = State.FAILED;
+                return;
+            }
+
+            state = State.READY;
+            DebugLog.log("ManagedVenv", "Managed venv READY: %s", getPythonPath());
+
+            // First-run: auto-save managed venv as the configured interpreter
+            String saved = PythonExecutor.getPythonPath();
+            if (saved == null || saved.trim().isEmpty() || "python3".equals(saved.trim())) {
+                PythonExecutor.setPythonPath(getPythonPath());
+                try { ij.Prefs.savePreferences(); } catch (Exception ignored) {}
+            }
+
+        } catch (Exception e) {
+            DebugLog.log("ManagedVenv", "Unexpected error in doEnsure: %s", e.getMessage());
+            state = State.FAILED;
+        }
+    }
 
     // -------------------------------------------------------------------------
     // System Python discovery
