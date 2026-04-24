@@ -29,7 +29,7 @@ public final class PluginUpdater {
      * Plugin version — bump this string on every release, matching the version
      * field in docs/latest.json and the GitHub release tag.
      */
-    public static final String CURRENT_VERSION = "0.1.21";
+    public static final String CURRENT_VERSION = "0.1.24";
 
     /** Must stay constant so ImageJ's update-folder swap logic can find the file. */
     public static final String JAR_NAME = "ImageJPipelineBuilder.jar";

@@ -14,10 +14,10 @@
 
   <groupId>buswinka.aipipeline</groupId>
   <artifactId>ImageJPipelineAI</artifactId>
-  <version>0.1.21</version>
+  <version>0.1.24</version>
 
   <name>AI Pipeline Builder</name>
-  <description>AI-powered macro generation plugin for Fiji/ImageJ</description>
+  <description>AI-powered macro generation plugin for ImageJ and Fiji</description>
   <url>https://github.com/buswinka/ijpb</url>
   <inceptionYear>2026</inceptionYear>
 
@@ -133,11 +133,6 @@ public final class BuildConfig {
     <dependency>
       <groupId>net.imagej</groupId>
       <artifactId>ij</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.scijava</groupId>
-      <artifactId>scijava-common</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
