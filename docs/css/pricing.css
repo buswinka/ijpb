@@ -18,12 +18,38 @@ body.pricing-page {
   color: var(--white);
 }
 
-.pricing-hero p {
-  font-size: clamp(1rem, 1.4vw, 1.2rem);
-  opacity: 0.8;
-  max-width: 520px;
+.hero-subtext {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  max-width: 700px;
   margin: 0 auto 48px;
+}
+
+.hero-lead {
+  font-size: clamp(1.05rem, 1.5vw, 1.22rem);
+  font-weight: 500;
+  color: var(--white);
+  opacity: 0.92;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.hero-sep {
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: rgba(255,255,255,0.25);
+  margin: 18px auto;
+}
+
+.hero-support {
+  font-size: clamp(0.88rem, 1.15vw, 1rem);
+  opacity: 0.55;
   line-height: 1.6;
+  text-align: center;
+  font-style: italic;
 }
 
 /* ── BILLING TOGGLE ── */
