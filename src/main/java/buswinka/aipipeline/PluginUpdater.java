@@ -29,14 +29,14 @@ public final class PluginUpdater {
      * Plugin version — bump this string on every release, matching the version
      * field in docs/latest.json and the GitHub release tag.
      */
-    public static final String CURRENT_VERSION = "0.1.24";
+    public static final String CURRENT_VERSION = "0.1.28";
 
     /** Must stay constant so ImageJ's update-folder swap logic can find the file. */
     public static final String JAR_NAME = "ImageJPipelineBuilder.jar";
 
     /** Manifest hosted on GitHub Pages (docs/ folder, branch main). */
     private static final String MANIFEST_URL =
-        "https://buswinka.github.io/ijpb/latest.json";
+        "https://www.imagejpipelinebuilder.com/latest.json";
 
     static final String PREF_AUTO_UPDATE = "ijpb.updater.autoUpdate";
 

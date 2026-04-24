@@ -1,7 +1,7 @@
 {
-  "version": "0.1.24",
-  "url": "https://github.com/buswinka/ijpb/releases/download/v0.1.24/ImageJPipelineBuilder.jar",
-  "sha256": "5ae0c056ba2deb547f42c5de5f9634c6c64d9ef50a189c8114d9cda8ea179b23",
+  "version": "0.1.28",
+  "url": "https://github.com/buswinka/ijpb/releases/download/v0.1.28/ImageJPipelineBuilder.jar",
+  "sha256": "8aba00b6f1e9e88575df40ebced606b2ea514193448e85b3e95c1f440110ef3b",
   "mandatory": false,
-  "release_notes": "Updated jar dependencies to reduce influence of the FIJI distribution of ImageJ, and improve accessability for default ImageJ."
+  "release_notes": "Updated default python manager. Now allows for a simplistic install of python configuration free usage of the system python venv. "
 }
