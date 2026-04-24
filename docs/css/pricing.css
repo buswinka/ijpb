@@ -164,11 +164,11 @@ body.pricing-page {
 
 .pricing-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 24px;
-  max-width: 1080px;
+  max-width: 720px;
   margin: 0 auto;
-  align-items: center;
+  align-items: stretch;
 }
 
 /* ── CARD BASE ── */
