@@ -1559,6 +1559,7 @@ public class ChatWindow extends JFrame {
     }
 
     private boolean awaitManagedVenv() {
+        ManagedVenv.ensureAsync();
         String configured = PythonExecutor.getPythonPath();
         boolean usingManaged = configured == null
                 || configured.trim().isEmpty()

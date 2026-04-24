@@ -248,7 +248,12 @@ public class PreferencesDialog extends JDialog {
             String custom = pythonCustomField.getText().trim();
             if (!custom.isEmpty()) PythonExecutor.setPythonPath(custom);
         } else if (selected instanceof CondaFinder.CondaEnv) {
-            PythonExecutor.setPythonPath(((CondaFinder.CondaEnv) selected).pythonPath);
+            CondaFinder.CondaEnv env = (CondaFinder.CondaEnv) selected;
+            if ("Plugin Default".equals(env.name)) {
+                PythonExecutor.setPythonPath("python3");
+            } else {
+                PythonExecutor.setPythonPath(env.pythonPath);
+            }
         }
     }
 
