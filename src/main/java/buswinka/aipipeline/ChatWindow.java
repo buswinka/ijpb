@@ -41,6 +41,9 @@ public class ChatWindow extends JFrame {
     private static final Color CODE_BG    = new Color(232, 232, 232);
     private static final Color ERROR_BG   = new Color(255, 232, 232);
     private static final Color ERROR_FG   = new Color(165, 0, 0);
+    private static final Color QUOTA_BG   = new Color(255, 238, 210);
+    private static final Color QUOTA_FG   = new Color(170, 75, 0);
+    private static final Color QUOTA_BORDER = new Color(240, 180, 100);
     private static final Color SYSTEM_FG  = new Color(130, 130, 130);
     private static final Color DIVIDER    = new Color(208, 208, 208);
     private static final Color PYTHON_ACCENT     = new Color(178, 106, 12);
@@ -52,7 +55,7 @@ public class ChatWindow extends JFrame {
     // Fields
     // ---------------------------------------------------------------------------
 
-    private final LLMClient llm;
+    private LLMClient llm;
     private final PipelineManager manager;
     private final RateLimiter rateLimiter;
     private final List<String[]> conversationHistory = new ArrayList<>();
@@ -383,10 +386,11 @@ public class ChatWindow extends JFrame {
             case "code-ijm":     return buildCodeEntry(text, viewWidth, IJM_SCRIPT);
             case "attachment":   return buildAttachmentEntry(text);
             case "subscribe":    return buildSubscribeEntry(text, viewWidth);
+            case "quota":        return buildBubbleEntry(text, false, false, true, viewWidth);
             default:
                 boolean isUser  = "user".equals(styleName);
                 boolean isError = "error".equals(styleName);
-                return buildBubbleEntry(text, isUser, isError, viewWidth);
+                return buildBubbleEntry(text, isUser, isError, false, viewWidth);
         }
     }
 
@@ -459,13 +463,17 @@ public class ChatWindow extends JFrame {
      * User bubbles align right; AI/error bubbles align left.
      */
     private Component buildBubbleEntry(String text, boolean isUser, boolean isError, int viewWidth) {
+        return buildBubbleEntry(text, isUser, isError, false, viewWidth);
+    }
+
+    private Component buildBubbleEntry(String text, boolean isUser, boolean isError, boolean isQuota, int viewWidth) {
         int maxBubbleWidth = (int) (viewWidth * 0.72);
 
-        Color bg          = isError ? ERROR_BG   : isUser ? USER_BG  : AI_BG;
-        Color fg          = isError ? ERROR_FG   : isUser ? USER_FG  : AI_FG;
-        Color borderColor = isUser  ? USER_BORDER : DIVIDER;
-        Color senderColor = isError ? ERROR_FG : (isUser ? new Color(10, 45, 100) : new Color(70, 70, 70));
-        String senderName = isUser  ? "You" : (isError ? "AI" : llm.getProviderName());
+        Color bg          = isQuota ? QUOTA_BG  : isError ? ERROR_BG   : isUser ? USER_BG  : AI_BG;
+        Color fg          = isQuota ? QUOTA_FG  : isError ? ERROR_FG   : isUser ? USER_FG  : AI_FG;
+        Color borderColor = isQuota ? QUOTA_BORDER : isUser ? USER_BORDER : DIVIDER;
+        Color senderColor = isQuota ? QUOTA_FG  : isError ? ERROR_FG : (isUser ? new Color(10, 45, 100) : new Color(70, 70, 70));
+        String senderName = isQuota ? "Limit Reached" : isUser ? "You" : (isError ? "AI" : llm.getProviderName());
 
         JLabel senderLabel = new JLabel(senderName);
         senderLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 11));
@@ -912,7 +920,11 @@ public class ChatWindow extends JFrame {
                     appendToChat("Error: generation was interrupted.\n", "error");
                 } catch (ExecutionException e) {
                     Throwable cause = e.getCause() != null ? e.getCause() : e;
-                    appendToChat("Error: " + cause.getMessage() + "\n", "error");
+                    if (cause instanceof IJBPCloudClient.QuotaException) {
+                        appendToChat(cause.getMessage(), "quota");
+                    } else {
+                        appendToChat("Error: " + cause.getMessage() + "\n", "error");
+                    }
                 }
             }
         };
@@ -1082,6 +1094,7 @@ public class ChatWindow extends JFrame {
         SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() throws Exception {
+                if (!awaitManagedVenv()) return null;
                 activePythonExecutor.execute(script, fijiCtx);
                 return null;
             }
@@ -1209,7 +1222,11 @@ public class ChatWindow extends JFrame {
                     appendToChat("Error: generation was interrupted.\n", "error");
                 } catch (ExecutionException e) {
                     Throwable cause = e.getCause() != null ? e.getCause() : e;
-                    appendToChat("Error: " + cause.getMessage() + "\n", "error");
+                    if (cause instanceof IJBPCloudClient.QuotaException) {
+                        appendToChat(cause.getMessage(), "quota");
+                    } else {
+                        appendToChat("Error: " + cause.getMessage() + "\n", "error");
+                    }
                 }
             }
         };
@@ -1338,12 +1355,19 @@ public class ChatWindow extends JFrame {
 
     /** Opens the preferences dialog for backend selection, API key, and license key. */
     private void onSettings() {
+        String providerBefore = llm.getProviderName();
         PreferencesDialog dlg = new PreferencesDialog(this);
         dlg.setVisible(true);
         if (dlg.isConfirmed()) {
+            // Rebuild the client so the new backend/model takes effect immediately.
+            llm = PreferencesDialog.buildClientFromPrefs();
             updateTierLabel();
             if (TierManager.isPro()) {
                 appendToChat("Pro license activated.\n", "system");
+            }
+            String providerAfter = llm.getProviderName();
+            if (!providerBefore.equals(providerAfter)) {
+                appendToChat("Provider switched to " + providerAfter + ".\n", "system");
             }
         }
     }
@@ -1510,27 +1534,68 @@ public class ChatWindow extends JFrame {
     // ---------------------------------------------------------------------------
 
     public String buildSystemPrompt() {
-        String context = ContextCollector.collect();
         String template = loadResource("/system_prompt.txt");
         String pythonSection = loadResource("/system_prompt_python.txt");
         String languageField = "    \"language\": \"ijm\" or \"python\",\n";
 
-        String base = template
-                .replace("{{FIJI_CONTEXT}}", context)
+        // Build the dynamic context block: live Fiji environment + pinned files.
+        // Both go into {{FIJI_CONTEXT}} so IJBPCloudClient splits them into the
+        // uncached `context` field, keeping the stable prompt fully server-side.
+        StringBuilder context = new StringBuilder(ContextCollector.collect());
+        if (!pinnedFiles.isEmpty()) {
+            context.append("\n\n=== Context Files (attached by user) ===\n");
+            context.append("The user has attached the following files for context. ")
+                   .append("Reference their content when generating or modifying scripts.\n\n");
+            for (Map.Entry<String, String> e : pinnedFiles.entrySet()) {
+                context.append("--- ").append(e.getKey()).append(" ---\n");
+                context.append(e.getValue()).append("\n\n");
+            }
+        }
+
+        return template
+                .replace("{{FIJI_CONTEXT}}", context.toString())
                 .replace("{{PYTHON_SECTION}}", pythonSection)
                 .replace("{{LANGUAGE_FIELD}}", languageField);
+    }
 
-        if (pinnedFiles.isEmpty()) return base;
+    private boolean awaitManagedVenv() {
+        String configured = PythonExecutor.getPythonPath();
+        boolean usingManaged = configured == null
+                || configured.trim().isEmpty()
+                || "python3".equals(configured.trim())
+                || "python".equals(configured.trim())
+                || configured.equals(ManagedVenv.getPythonPath());
 
-        StringBuilder sb = new StringBuilder(base);
-        sb.append("\n\n=== Context Files (attached by user) ===\n");
-        sb.append("The user has attached the following files for context. ")
-          .append("Reference their content when generating or modifying scripts.\n\n");
-        for (Map.Entry<String, String> e : pinnedFiles.entrySet()) {
-            sb.append("--- ").append(e.getKey()).append(" ---\n");
-            sb.append(e.getValue()).append("\n\n");
+        if (!usingManaged) return true;
+
+        ManagedVenv.State s = ManagedVenv.getState();
+        if (s == ManagedVenv.State.READY)   return true;
+        if (s == ManagedVenv.State.FAILED) {
+            SwingUtilities.invokeLater(() -> appendToChat(
+                "Python environment setup failed. Please configure a Python interpreter in Preferences.\n",
+                "error"));
+            return false;
         }
-        return sb.toString();
+
+        for (int n = 1; n <= 10; n++) {
+            final int attempt = n;
+            SwingUtilities.invokeLater(() -> appendToChat(
+                "Python environment is still being set up. Trying again " + attempt + "/10\n",
+                "system"));
+            try { Thread.sleep(2000); } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return false;
+            }
+            s = ManagedVenv.getState();
+            if (s == ManagedVenv.State.READY) return true;
+            if (s == ManagedVenv.State.FAILED) break;
+        }
+
+        SwingUtilities.invokeLater(() -> appendToChat(
+            "Python environment setup did not finish in time. " +
+            "Please wait a few minutes and hit Run again, or configure a Python interpreter in Preferences.\n",
+            "error"));
+        return false;
     }
 
     private static String loadResource(String path) {
