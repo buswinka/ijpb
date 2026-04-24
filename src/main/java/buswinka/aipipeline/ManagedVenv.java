@@ -80,13 +80,15 @@ public class ManagedVenv {
 
             // First-run: auto-save managed venv as the configured interpreter
             String saved = PythonExecutor.getPythonPath();
-            if (saved == null || saved.trim().isEmpty() || "python3".equals(saved.trim())) {
+            if (saved == null || saved.trim().isEmpty() || "python3".equals(saved.trim()) || "python".equals(saved.trim())) {
                 PythonExecutor.setPythonPath(getPythonPath());
-                try { ij.Prefs.savePreferences(); } catch (Exception ignored) {}
+                try { ij.Prefs.savePreferences(); } catch (Exception e2) {
+                    DebugLog.log("ManagedVenv", "Could not save preferences: %s", e2.getMessage());
+                }
             }
 
         } catch (Exception e) {
-            DebugLog.log("ManagedVenv", "Unexpected error in doEnsure: %s", e.getMessage());
+            DebugLog.log("ManagedVenv", "Unexpected error in doEnsure: %s", e.toString());
             state = State.FAILED;
         }
     }
@@ -168,6 +170,7 @@ public class ManagedVenv {
             drain.setDaemon(true);
             drain.start();
             p.waitFor();
+            try { drain.join(2000); } catch (InterruptedException ignored) { Thread.currentThread().interrupt(); }
             return p.exitValue();
         } catch (Exception e) {
             return -1;
