@@ -1,7 +1,7 @@
 {
-  "version": "0.1.28",
-  "url": "https://github.com/buswinka/ijpb/releases/download/v0.1.28/ImageJPipelineBuilder.jar",
-  "sha256": "8aba00b6f1e9e88575df40ebced606b2ea514193448e85b3e95c1f440110ef3b",
+  "version": "0.1.29",
+  "url": "https://github.com/buswinka/ijpb/releases/download/v0.1.29/ImageJPipelineBuilder.jar",
+  "sha256": "b4d944adb88c7a8d3d36956254b3de1104bf54dd46815af36784581872da059f",
   "mandatory": false,
-  "release_notes": "Updated default python manager. Now allows for a simplistic install of python configuration free usage of the system python venv. "
+  "release_notes": "Updated HTTP header to better improve compatability with managed internet systems (Hospitals)"
 }
