@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Pipeline Builder</title>
+<title>IJPB | Onboarding</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&family=Outfit:wght@400;700;800;900&display=swap" rel="stylesheet">
@@ -1166,7 +1166,8 @@ obNext.addEventListener('click', () => {
 });
 obSkip.addEventListener('click', endOnboarding);
 
-document.getElementById('restartTourBtn').addEventListener('click', () => {
+document.getElementById('endScreen').addEventListener('click', (e) => {
+  if (!e.target.closest('#restartTourBtn')) return;
   document.getElementById('endScreen').classList.remove('show');
   // Reset everything
   onboardingActive = true; currentStep = 0;
