@@ -1,0 +1,15 @@
+title: IJPB — ImageJ Pipeline Builder
+url: "https://www.imagejpipelinebuilder.com"
+baseurl: ""
+
+collections:
+  articles:
+    output: true
+    permalink: /articles/:name/
+
+exclude:
+  - worker/
+  - src/
+  - build.sh
+  - Gemfile
+  - Gemfile.lock
