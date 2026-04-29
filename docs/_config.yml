@@ -8,8 +8,5 @@ collections:
     permalink: /articles/:name/
 
 exclude:
-  - worker/
-  - src/
-  - build.sh
   - Gemfile
   - Gemfile.lock
