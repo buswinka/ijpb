@@ -645,7 +645,7 @@ I like Ollama's page. Seems good.
     const saveBtn  = document.getElementById('hiwSaveBtn');
     const stageEls = document.querySelectorAll('.hiw-stage');
 
-    if (!track) return;
+    if (!track || !chatArea || !runBtn || !saveBtn) return;
 
     const SENDER = { ai: 'IJPB Cloud', user: 'You' };
 
@@ -708,6 +708,7 @@ I like Ollama's page. Seems good.
     }
 
     function renderInstant(stage) {
+      animGeneration++;
       chatArea.innerHTML = '';
       const msgs = MSGS[stage];
       if (msgs.length === 0) {
@@ -721,8 +722,10 @@ I like Ollama's page. Seems good.
     }
 
     function appendAnimated(msgs, fromIdx) {
+      const gen = ++animGeneration;
       let i = fromIdx;
       function next() {
+        if (gen !== animGeneration) return;
         if (i >= msgs.length) return;
         const el = makeBubble(msgs[i]);
         el.style.opacity = '0';
@@ -741,6 +744,7 @@ I like Ollama's page. Seems good.
       next();
     }
 
+    let animGeneration = 0;
     let currentStage = 0;
     renderInstant(0);
 
@@ -773,6 +777,7 @@ I like Ollama's page. Seems good.
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   })();
 
   // ── Interactive install demo ──
