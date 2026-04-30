@@ -15,7 +15,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IJPB | AI Pipeline Builder for ImageJ</title>
   <meta name="description" content="ImageJ Pipeline Builder (IJPB) lets researchers build ImageJ plugins and analysis pipelines using plain English. Powered by the best AI models — free to start, no API key required.">
-  <link rel="canonical" href="https://www.imagejpipelinebuilder.com/index.html">
+  <link rel="canonical" href="https://www.imagejpipelinebuilder.com/">
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.imagejpipelinebuilder.com/index.html">
@@ -114,43 +114,63 @@ I like Ollama's page. Seems good.
 
 <!-- HOW IT WORKS -->
 <section class="how-it-works" id="how-it-works">
-  <h2 class="section-title anim-fade">How it works</h2>
-  <div class="steps">
-    <div class="step anim-fade">
-      <div class="step-num">1</div>
-      <div class="step-visual">
-        <div class="step-mock chat-mock">
-          <div class="mock-bubble user-bubble">Segment nuclei in the blue channel and count them</div>
-          <div class="mock-bubble ai-bubble">Got it — generating an ImageJ macro with Otsu thresholding and watershed separation…</div>
+  <div class="hiw-title-wrap">
+    <h2 class="section-title anim-fade">How it works</h2>
+  </div>
+  <div class="hiw-scroll-track" id="hiwScrollTrack">
+    <div class="hiw-sticky">
+
+      <!-- Left: stage descriptions -->
+      <div class="hiw-stages">
+        <div class="hiw-stage active" data-stage="0">
+          <div class="hiw-stage-num">1</div>
+          <h3>Think</h3>
+          <p>Open the builder in ImageJ and describe your analysis task in plain English.</p>
+        </div>
+        <div class="hiw-stage" data-stage="1">
+          <div class="hiw-stage-num">2</div>
+          <h3>Ask</h3>
+          <p>The AI understands your intent and asks smart follow-up questions about your image.</p>
+        </div>
+        <div class="hiw-stage" data-stage="2">
+          <div class="hiw-stage-num">3</div>
+          <h3>Refine</h3>
+          <p>You answer in plain English — no parameters to look up, no docs to search.</p>
+        </div>
+        <div class="hiw-stage" data-stage="3">
+          <div class="hiw-stage-num">4</div>
+          <h3>Build</h3>
+          <p>A complete script appears, ready to run on your active ImageJ window.</p>
         </div>
       </div>
-      <h3>Think. What are you sick of doing?</h3>
-      <p>Open up a chat window in ImageJ and tell the AI what you need in plain English. It can be literally anything. </p>
-    </div>
-    <div class="step anim-fade">
-      <div class="step-num">2</div>
-      <div class="step-visual">
-        <div class="step-mock code-mock">
-          <div class="mock-code-line"><span class="kw">run</span>(<span class="str">"Split Channels"</span>);</div>
-          <div class="mock-code-line"><span class="kw">setAutoThreshold</span>(<span class="str">"Otsu"</span>);</div>
-          <div class="mock-code-line"><span class="kw">run</span>(<span class="str">"Watershed"</span>);</div>
-          <div class="mock-code-line"><span class="kw">run</span>(<span class="str">"Analyze Particles..."</span>);</div>
+
+      <!-- Right: macOS chat window -->
+      <div class="hiw-chat-wrap">
+        <div class="hiw-window">
+          <div class="hiw-titlebar">
+            <div class="hiw-traffic-lights">
+              <div class="hiw-dot hiw-dot-close"></div>
+              <div class="hiw-dot hiw-dot-min"></div>
+              <div class="hiw-dot hiw-dot-max"></div>
+            </div>
+            <span class="hiw-titlebar-title">AI Pipeline Builder</span>
+          </div>
+          <div class="hiw-chat-area" id="hiwChatArea">
+            <p class="hiw-welcome">Welcome! Describe what you need and I'll build it for you.</p>
+          </div>
+          <div class="hiw-toolbar">
+            <button class="hiw-toolbar-btn" id="hiwRunBtn"><span class="hiw-run-icon"></span> Run</button>
+            <button class="hiw-toolbar-btn" id="hiwSaveBtn">Save</button>
+            <div class="hiw-toolbar-spacer"></div>
+            <button class="hiw-toolbar-btn">⚙ Settings</button>
+          </div>
+          <div class="hiw-input-row">
+            <input class="hiw-text-input" type="text" placeholder="Ask the AI to build something…" readonly />
+            <button class="hiw-send-btn">Send</button>
+          </div>
         </div>
       </div>
-      <h3>The AI automates it for you.</h3>
-      <p>It writes a script you can run from the chat window. It evaluates on the currently open image. Results are returned to ImageJ. The AI will fix it if it doesn't.</p>
-    </div>
-    <div class="step anim-fade">
-      <div class="step-num">3</div>
-      <div class="step-visual">
-        <div class="step-mock results-mock">
-          <div class="mock-result-row"><span>Nuclei found</span><strong>247</strong></div>
-          <div class="mock-result-row"><span>Mean area</span><strong>142.3 µm²</strong></div>
-          <div class="mock-result-row"><span>Processing time</span><strong>1.2s</strong></div>
-        </div>
-      </div>
-      <h3>Save your automation in ImageJ.</h3>
-      <p>Save the pipeline as menu item. Run it on a batch of images. Iterate on it later. Stop thinking.</p>
+
     </div>
   </div>
 </section>
