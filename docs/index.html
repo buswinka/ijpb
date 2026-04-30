@@ -757,8 +757,7 @@ I like Ollama's page. Seems good.
       const welcome = chatArea.querySelector('.hiw-welcome');
       if (welcome && MSGS[stage].length > 0) welcome.remove();
       const existing = countRendered();
-      const newMsgs = MSGS[stage].slice(existing);
-      if (newMsgs.length > 0) appendAnimated(MSGS[stage], existing);
+      if (existing < MSGS[stage].length) appendAnimated(MSGS[stage], existing);
       runBtn.classList.toggle('enabled', stage === 3);
       saveBtn.classList.toggle('enabled', stage === 3);
     }
