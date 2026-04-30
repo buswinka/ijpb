@@ -637,6 +637,144 @@ I like Ollama's page. Seems good.
   }, { threshold: 0.12 });
   document.querySelectorAll('.anim-fade, .anim-slide-left, .anim-slide-right').forEach(el => observer.observe(el));
 
+  // ── How It Works scroll demo ──
+  (function hiwScrollDemo() {
+    const track    = document.getElementById('hiwScrollTrack');
+    const chatArea = document.getElementById('hiwChatArea');
+    const runBtn   = document.getElementById('hiwRunBtn');
+    const saveBtn  = document.getElementById('hiwSaveBtn');
+    const stageEls = document.querySelectorAll('.hiw-stage');
+
+    if (!track) return;
+
+    const SENDER = { ai: 'IJPB Cloud', user: 'You' };
+
+    const MSGS = [
+      [],
+      [
+        { who: 'user', text: 'Segment nuclei in the blue channel and count them.' },
+        { who: 'ai',   text: "Got it! What approximate diameter are the nuclei in pixels? (Or say \"auto\" and I'll detect it.)" },
+      ],
+      [
+        { who: 'user', text: 'Segment nuclei in the blue channel and count them.' },
+        { who: 'ai',   text: "Got it! What approximate diameter are the nuclei in pixels? (Or say \"auto\" and I'll detect it.)" },
+        { who: 'user', text: 'About 20–30px.' },
+        { who: 'ai',   text: 'Should I subtract background first? And do you want the count in a results table, an overlay, or both?' },
+        { who: 'user', text: 'Rolling ball 50px, results table please.' },
+      ],
+      [
+        { who: 'user', text: 'Segment nuclei in the blue channel and count them.' },
+        { who: 'ai',   text: "Got it! What approximate diameter are the nuclei in pixels? (Or say \"auto\" and I'll detect it.)" },
+        { who: 'user', text: 'About 20–30px.' },
+        { who: 'ai',   text: 'Should I subtract background first? And do you want the count in a results table, an overlay, or both?' },
+        { who: 'user', text: 'Rolling ball 50px, results table please.' },
+        { who: 'ai',   text: "Here's your macro:" },
+        { who: 'ai',   isScript: true, text: '// IJPB — Nuclei Counter\nrun("Split Channels");\nselectWindow("C3-image.tif");\nrun("Subtract Background...", "rolling=50");\nsetAutoThreshold("Otsu dark");\nrun("Convert to Mask");\nrun("Watershed");\nrun("Analyze Particles...",\n  "size=15-Infinity circularity=0.3-1.0 display results");' },
+      ],
+    ];
+
+    function makeBubble(msg) {
+      if (msg.isScript) {
+        const wrap = document.createElement('div');
+        wrap.className = 'hiw-script-wrapper';
+        const lbl = document.createElement('div');
+        lbl.className = 'hiw-script-label';
+        lbl.textContent = '— ImageJ Macro —';
+        const pre = document.createElement('pre');
+        pre.className = 'hiw-script-block';
+        pre.textContent = msg.text;
+        wrap.appendChild(lbl);
+        wrap.appendChild(pre);
+        return wrap;
+      }
+      const wrap = document.createElement('div');
+      wrap.className = 'hiw-msg ' + msg.who;
+      const bub = document.createElement('div');
+      bub.className = 'hiw-bubble';
+      const snd = document.createElement('div');
+      snd.className = 'hiw-sender';
+      snd.textContent = SENDER[msg.who];
+      const txt = document.createElement('div');
+      txt.className = 'hiw-msg-text';
+      txt.textContent = msg.text;
+      bub.appendChild(snd);
+      bub.appendChild(txt);
+      wrap.appendChild(bub);
+      return wrap;
+    }
+
+    function countRendered() {
+      return chatArea.querySelectorAll('.hiw-msg, .hiw-script-wrapper').length;
+    }
+
+    function renderInstant(stage) {
+      chatArea.innerHTML = '';
+      const msgs = MSGS[stage];
+      if (msgs.length === 0) {
+        chatArea.innerHTML = '<p class="hiw-welcome">Welcome! Describe what you need and I\'ll build it for you.</p>';
+      } else {
+        msgs.forEach(msg => chatArea.appendChild(makeBubble(msg)));
+      }
+      chatArea.scrollTop = chatArea.scrollHeight;
+      runBtn.classList.toggle('enabled', stage === 3);
+      saveBtn.classList.toggle('enabled', stage === 3);
+    }
+
+    function appendAnimated(msgs, fromIdx) {
+      let i = fromIdx;
+      function next() {
+        if (i >= msgs.length) return;
+        const el = makeBubble(msgs[i]);
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(6px)';
+        el.style.transition = 'opacity 0.22s ease, transform 0.22s ease';
+        chatArea.appendChild(el);
+        chatArea.scrollTop = chatArea.scrollHeight;
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+          chatArea.scrollTop = chatArea.scrollHeight;
+        }));
+        i++;
+        setTimeout(next, 350);
+      }
+      next();
+    }
+
+    let currentStage = 0;
+    renderInstant(0);
+
+    function setStage(stage, forward) {
+      stageEls.forEach((el, i) => el.classList.toggle('active', i === stage));
+      if (!forward) {
+        renderInstant(stage);
+        return;
+      }
+      const welcome = chatArea.querySelector('.hiw-welcome');
+      if (welcome && MSGS[stage].length > 0) welcome.remove();
+      const existing = countRendered();
+      const newMsgs = MSGS[stage].slice(existing);
+      if (newMsgs.length > 0) appendAnimated(MSGS[stage], existing);
+      runBtn.classList.toggle('enabled', stage === 3);
+      saveBtn.classList.toggle('enabled', stage === 3);
+    }
+
+    function onScroll() {
+      const rect   = track.getBoundingClientRect();
+      const trackH = track.offsetHeight;
+      const viewH  = window.innerHeight;
+      const progress = Math.max(0, Math.min(1, -rect.top / (trackH - viewH)));
+      const stage = Math.min(3, Math.floor(progress * 4));
+      if (stage !== currentStage) {
+        const forward = stage > currentStage;
+        currentStage = stage;
+        setStage(stage, forward);
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+
   // ── Interactive install demo ──
   (function () {
     const container  = document.getElementById('idemoContainer');
