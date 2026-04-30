@@ -448,7 +448,7 @@ body.nav-open { overflow: hidden; }
   align-items: center;
   gap: 48px;
   padding: 0 clamp(40px, 5vw, 100px);
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* ── Left: stage labels ── */
