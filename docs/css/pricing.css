@@ -1,12 +1,17 @@
 /* ── PRICING PAGE ── */
 
 body.pricing-page {
-  background: linear-gradient(180deg, rgb(124, 188, 238) 0%, rgb(124, 188, 238) 20%, #3b8ad0 40%, #2d6faa 60%, #1f3f6e 80%, #1a2332 100%);
+  background: var(--white);
 }
 
+/* ── PRICING HERO ── */
 .pricing-hero {
   padding: 140px clamp(20px, 3vw, 60px) 80px;
   text-align: center;
+  border-left:   var(--border-thickness) solid var(--carbon-black);
+  border-right:  var(--border-thickness) solid var(--carbon-black);
+  border-bottom: var(--border-thickness) solid var(--carbon-black);
+  border-top:    var(--border-thickness) solid var(--carbon-black);
 }
 
 .pricing-hero h1 {
@@ -15,7 +20,8 @@ body.pricing-page {
   font-size: clamp(2.8rem, 5vw, 4.5rem);
   line-height: 1.05;
   margin-bottom: 16px;
-  color: var(--white);
+  color: var(--carbon-black);
+  text-shadow: 2px 2px 2px var(--sky-blue);
 }
 
 .hero-subtext {
@@ -30,26 +36,29 @@ body.pricing-page {
 .hero-lead {
   font-size: clamp(1.05rem, 1.5vw, 1.22rem);
   font-weight: 500;
-  color: var(--white);
-  opacity: 0.92;
+  color: var(--carbon-black);
+  opacity: 0.75;
   line-height: 1.55;
   text-align: center;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .hero-sep {
   display: block;
   width: 32px;
   height: 1px;
-  background: rgba(255,255,255,0.25);
+  background: var(--carbon-black);
+  opacity: 0.2;
   margin: 18px auto;
 }
 
 .hero-support {
   font-size: clamp(0.88rem, 1.15vw, 1rem);
-  opacity: 0.55;
+  opacity: 0.5;
   line-height: 1.6;
   text-align: center;
   font-style: italic;
+  color: var(--carbon-black);
 }
 
 /* ── BILLING TOGGLE ── */
@@ -57,19 +66,28 @@ body.pricing-page {
   display: inline-flex;
   align-items: center;
   gap: 14px;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
+  background: var(--white);
+  border: var(--border-thickness) solid var(--carbon-black);
   border-radius: 40px;
   padding: 6px 20px;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   user-select: none;
+  box-shadow: 3px 3px 0 var(--sky-blue);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  color: var(--carbon-black);
+}
+
+.billing-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 3px 5px 0 var(--sky-blue);
 }
 
 .billing-toggle span {
-  opacity: 0.6;
+  opacity: 0.5;
   transition: opacity 0.2s;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .billing-toggle span.active {
@@ -80,23 +98,24 @@ body.pricing-page {
 .toggle-track {
   width: 44px;
   height: 24px;
-  background: rgba(255,255,255,0.2);
+  background: var(--beige);
+  border: var(--border-thickness) solid var(--carbon-black);
   border-radius: 12px;
   position: relative;
   transition: background 0.2s;
 }
 
 .toggle-track.annual {
-  background: var(--white);
+  background: var(--sky-blue);
 }
 
 .toggle-thumb {
   position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 18px;
-  height: 18px;
-  background: var(--sky-deep);
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: var(--carbon-black);
   border-radius: 50%;
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -106,8 +125,8 @@ body.pricing-page {
 }
 
 .save-badge {
-  background: rgba(255,255,255,0.25);
-  border: 1px solid rgba(255,255,255,0.4);
+  background: var(--punch-red);
+  border: var(--border-thickness) solid var(--carbon-black);
   border-radius: 20px;
   padding: 2px 10px;
   font-size: 0.75rem;
@@ -124,26 +143,28 @@ body.pricing-page {
   transform: translateY(0);
 }
 
-/* ── PRICING GRID ── */
-
-/* Cloud accent knobs */
+/* ── PRICING SECTION ── */
 .pricing-section {
   --pcl-left-width:   500px;
-  --pcl-left-opacity: 0.33;
+  --pcl-left-opacity: 0.18;
   --pcl-left-x:      -160px;
   --pcl-left-y:       10px;
   --pcl-left-rot:     0deg;
 
   --pcl-right-width:   500px;
-  --pcl-right-opacity: 0.33;
+  --pcl-right-opacity: 0.18;
   --pcl-right-x:      -160px;
   --pcl-right-y:       10px;
   --pcl-right-rot:     0deg;
 
-  --pcl-divider-y:     675px;  /* align with cloud bottom at 0deg rotation */
+  --pcl-divider-y:     675px;
 
   padding: 20px clamp(20px, 3vw, 60px) 120px;
   position: relative;
+  border-left:   var(--border-thickness) solid var(--carbon-black);
+  border-right:  var(--border-thickness) solid var(--carbon-black);
+  border-bottom: var(--border-thickness) solid var(--carbon-black);
+  margin-top: calc(-1 * var(--border-thickness));
 }
 
 .pricing-cloud-left,
@@ -183,8 +204,9 @@ body.pricing-page {
   left: 0;
   right: 0;
   top: var(--pcl-divider-y);
-  height: 1px;
-  background: rgba(255, 255, 255, 0.15);
+  height: var(--border-thickness);
+  background: var(--carbon-black);
+  opacity: 0.08;
   z-index: 1;
 }
 
@@ -199,41 +221,33 @@ body.pricing-page {
 
 /* ── CARD BASE ── */
 .plan-card {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
+  background: var(--beige);
+  border: var(--border-thickness) solid var(--carbon-black);
   border-radius: 24px;
   padding: 40px 32px;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
+  box-shadow: 4px 4px 0 var(--sky-blue);
+  color: var(--carbon-black);
 }
 
 .plan-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  box-shadow: 6px 8px 0 var(--sky-blue);
 }
 
-/* ── PRO CARD (featured) ── */
-.plan-card.featured {
-  background: rgba(255,255,255,0.18);
-  border: 2px solid rgba(255,255,255,0.6);
-  box-shadow: 0 8px 48px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.3);
-  transform: translateY(-12px);
-  padding-top: 56px;
-  padding-bottom: 56px;
-}
-
-.plan-card.featured:hover {
-  transform: translateY(-18px);
-}
-
-/* ── LAB CARD ── */
+/* ── CLOUD (featured) CARD ── */
 .plan-card.lab {
-  background: rgba(26, 35, 50, 0.5);
-  border: 1px solid rgba(255,255,255,0.15);
+  background: var(--carbon-black);
+  border-color: var(--punch-red);
+  color: var(--white);
+  box-shadow: 4px 4px 0 var(--punch-red);
+}
+
+.plan-card.lab:hover {
+  box-shadow: 6px 8px 0 var(--punch-red);
 }
 
 /* ── POPULAR BADGE ── */
@@ -242,8 +256,8 @@ body.pricing-page {
   top: -14px;
   left: 50%;
   transform: translateX(-50%);
-  background: var(--white);
-  color: var(--sky-deep);
+  background: var(--punch-red);
+  color: var(--white);
   font-family: 'Outfit', sans-serif;
   font-weight: 900;
   font-size: 0.72rem;
@@ -251,8 +265,8 @@ body.pricing-page {
   text-transform: uppercase;
   padding: 5px 18px;
   border-radius: 20px;
+  border: var(--border-thickness) solid var(--carbon-black);
   white-space: nowrap;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
 }
 
 /* ── CARD CONTENT ── */
@@ -262,12 +276,12 @@ body.pricing-page {
   font-size: 1rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  opacity: 0.7;
+  opacity: 0.6;
   margin-bottom: 12px;
 }
 
-.plan-card.featured .plan-name {
-  opacity: 1;
+.plan-card.lab .plan-name {
+  opacity: 0.7;
 }
 
 .plan-price {
@@ -275,11 +289,15 @@ body.pricing-page {
   font-weight: 400;
   font-size: 3.6rem;
   line-height: 1;
-  color: var(--white);
+  color: var(--carbon-black);
   margin-bottom: 4px;
   display: flex;
   align-items: flex-start;
   gap: 2px;
+}
+
+.plan-card.lab .plan-price {
+  color: var(--white);
 }
 
 .plan-price .currency {
@@ -319,12 +337,17 @@ body.pricing-page {
   margin-bottom: 28px;
   line-height: 1.5;
   min-height: 40px;
+  font-family: 'DM Sans', sans-serif;
 }
 
 .plan-divider {
   border: none;
-  border-top: 1px solid rgba(255,255,255,0.15);
+  border-top: var(--border-thickness) solid rgba(0,0,0,0.12);
   margin-bottom: 24px;
+}
+
+.plan-card.lab .plan-divider {
+  border-top-color: rgba(255,255,255,0.15);
 }
 
 /* ── FEATURE LIST ── */
@@ -344,15 +367,25 @@ body.pricing-page {
   display: flex;
   align-items: flex-start;
   gap: 10px;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--carbon-black);
+}
+
+.plan-card.lab .plan-features li {
+  color: var(--white);
 }
 
 .plan-features li::before {
   content: '✓';
   font-weight: 700;
-  color: var(--white);
+  color: var(--punch-red);
   opacity: 0.9;
   flex-shrink: 0;
   margin-top: 1px;
+}
+
+.plan-card.lab .plan-features li::before {
+  color: var(--sky-blue);
 }
 
 .plan-features li.muted {
@@ -367,45 +400,43 @@ body.pricing-page {
 .plan-cta {
   display: block;
   width: 100%;
-  padding: 14px 24px;
-  border-radius: 14px;
+  padding: 12px 24px;
+  border-radius: 10px;
   font-family: 'Outfit', sans-serif;
   font-weight: 800;
   font-size: 0.95rem;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  border: 2px solid rgba(255,255,255,0.4);
-  background: rgba(255,255,255,0.1);
-  color: var(--white);
-  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: var(--border-thickness) solid var(--carbon-black);
+  background: var(--white);
+  color: var(--punch-red);
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.18);
+  transition: all 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .plan-cta:hover {
-  background: rgba(255,255,255,0.2);
-  border-color: rgba(255,255,255,0.7);
+  background: var(--carbon-black);
+  border-color: var(--punch-red);
+  color: var(--beige);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-}
-
-.plan-card.featured .plan-cta {
-  background: var(--white);
-  color: var(--sky-deep);
-  border-color: var(--white);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-}
-
-.plan-card.featured .plan-cta:hover {
-  background: var(--sky-light);
-  color: var(--dark);
-  transform: translateY(-3px);
-  box-shadow: 0 10px 32px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
 }
 
 .plan-card.lab .plan-cta {
-  border-color: rgba(255,255,255,0.25);
+  background: var(--punch-red);
+  border-color: var(--punch-red);
+  color: var(--white);
+  box-shadow: 3px 3px 0 var(--sky-blue);
+}
+
+.plan-card.lab .plan-cta:hover {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--punch-red);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
 }
 
 /* ── ANNUAL PRICE (hidden by default) ── */
@@ -425,6 +456,8 @@ body.annual .price-annual  { display: flex; }
   justify-content: center;
   gap: 32px;
   flex-wrap: wrap;
+  color: var(--carbon-black);
+  font-family: 'DM Sans', sans-serif;
 }
 
 /* ── CREDIT HINT ── */
@@ -437,21 +470,29 @@ body.annual .price-annual  { display: flex; }
   font-size: 0.72rem;
   font-style: normal;
   border-radius: 50%;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.07);
+  border: var(--border-thickness) solid rgba(0,0,0,0.15);
   cursor: help;
   vertical-align: middle;
   margin-left: 4px;
   position: relative;
+  color: var(--carbon-black);
 }
+
+.plan-card.lab .credit-hint {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.2);
+  color: var(--white);
+}
+
 .credit-hint:hover::after {
   content: attr(title);
   position: absolute;
   bottom: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%);
-  background: var(--dark);
-  border: 1px solid rgba(255,255,255,0.2);
+  background: var(--carbon-black);
+  border: var(--border-thickness) solid var(--punch-red);
   color: var(--white);
   font-size: 0.76rem;
   line-height: 1.45;
@@ -461,7 +502,7 @@ body.annual .price-annual  { display: flex; }
   white-space: normal;
   z-index: 10;
   pointer-events: none;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  box-shadow: 3px 3px 0 var(--sky-blue);
 }
 
 /* ── CREDIT EXPLAINER ── */
@@ -471,15 +512,18 @@ body.annual .price-annual  { display: flex; }
   margin: 40px auto 0;
   font-size: 0.85rem;
   line-height: 1.6;
-  opacity: 0.6;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
+  opacity: 0.7;
+  background: var(--beige);
+  border: var(--border-thickness) solid var(--carbon-black);
   border-radius: 12px;
   padding: 16px 24px;
+  color: var(--carbon-black);
+  font-family: 'DM Sans', sans-serif;
 }
+
 .credit-explainer strong {
   opacity: 1;
-  color: var(--white);
+  color: var(--carbon-black);
 }
 
 /* ── FAQ ── */
@@ -489,12 +533,13 @@ body.annual .price-annual  { display: flex; }
 }
 
 .faq-title {
-  font-family: 'Outfit', sans-serif;
+  font-family: "Bagel Fat One", system-ui;
   font-weight: 900;
   font-size: clamp(1.6rem, 2.5vw, 2.2rem);
   text-align: center;
   margin-bottom: 48px;
-  color: var(--white);
+  color: var(--carbon-black);
+  text-shadow: 2px 2px 2px var(--sky-blue);
 }
 
 .faq-group {
@@ -507,17 +552,18 @@ body.annual .price-annual  { display: flex; }
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  opacity: 0.45;
+  color: var(--punch-red);
+  opacity: 0.8;
   margin-bottom: 12px;
   padding-left: 4px;
 }
 
 .faq-item {
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: var(--border-thickness) solid rgba(0,0,0,0.12);
 }
 
 .faq-item:first-of-type {
-  border-top: 1px solid rgba(255,255,255,0.1);
+  border-top: var(--border-thickness) solid rgba(0,0,0,0.12);
 }
 
 .faq-item summary {
@@ -530,7 +576,7 @@ body.annual .price-annual  { display: flex; }
   font-family: 'DM Sans', sans-serif;
   font-weight: 600;
   font-size: 0.97rem;
-  color: var(--white);
+  color: var(--carbon-black);
   cursor: pointer;
   user-select: none;
   transition: opacity 0.2s;
@@ -543,18 +589,19 @@ body.annual .price-annual  { display: flex; }
   font-family: 'Outfit', sans-serif;
   font-weight: 700;
   font-size: 1.3rem;
-  opacity: 0.4;
+  color: var(--punch-red);
+  opacity: 0.7;
   flex-shrink: 0;
   transition: transform 0.25s ease, opacity 0.2s;
 }
 
 .faq-item[open] summary::after {
   transform: rotate(45deg);
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .faq-item summary:hover {
-  opacity: 0.85;
+  opacity: 0.75;
 }
 
 .faq-item p {
@@ -562,10 +609,12 @@ body.annual .price-annual  { display: flex; }
   line-height: 1.65;
   opacity: 0.65;
   padding: 0 4px 20px;
+  color: var(--carbon-black);
+  font-family: 'DM Sans', sans-serif;
 }
 
 .faq-item p a {
-  color: var(--white);
+  color: var(--punch-red);
   opacity: 1;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -587,4 +636,9 @@ body.annual .price-annual  { display: flex; }
   .plan-tagline {
     min-height: unset;
   }
+}
+
+@media (max-width: 900px) {
+  .topbar-nav { display: none; }
+  .hamburger { display: block; }
 }
