@@ -2,6 +2,13 @@ title: IJPB — ImageJ Pipeline Builder
 url: "https://www.imagejpipelinebuilder.com"
 baseurl: ""
 
+defaults:
+  - scope:
+      path: ""
+      type: articles
+    values:
+      layout: article
+
 collections:
   articles:
     output: true
@@ -10,3 +17,5 @@ collections:
 exclude:
   - Gemfile
   - Gemfile.lock
+  - superpowers
+  - _site

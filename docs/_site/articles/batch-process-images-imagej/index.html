@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EGCCXG503Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-EGCCXG503Y');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Batch Process Images in ImageJ | IJPB</title>
+  <meta name="description" content="How to run the same analysis pipeline across a folder of images in ImageJ using macros and the built-in batch processor — and how IJPB handles it in one step.">
+  <link rel="canonical" href="https://www.imagejpipelinebuilder.com/articles/batch-process-images-imagej/">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.imagejpipelinebuilder.com/articles/batch-process-images-imagej/">
+  <meta property="og:title" content="How to Batch Process Images in ImageJ | IJPB">
+  <meta property="og:description" content="How to run the same analysis pipeline across a folder of images in ImageJ using macros and the built-in batch processor — and how IJPB handles it in one step.">
+  <meta property="og:image" content="https://www.imagejpipelinebuilder.com/images/icon.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How to Batch Process Images in ImageJ | IJPB">
+  <meta name="twitter:description" content="How to run the same analysis pipeline across a folder of images in ImageJ using macros and the built-in batch processor — and how IJPB handles it in one step.">
+  <meta name="twitter:image" content="https://www.imagejpipelinebuilder.com/images/icon.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Batch Process Images in ImageJ",
+    "description": "How to run the same analysis pipeline across a folder of images in ImageJ using macros and the built-in batch processor — and how IJPB handles it in one step.",
+    "datePublished": "2026-04-29"
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&family=Outfit:wght@800;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/images/icon.png">
+  <link rel="stylesheet" href="/css/articles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&family=Outfit:wght@800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="/" class="topbar-logo">IJPB</a>
+  <ul class="topbar-nav">
+    <li><a href="/#features">Features</a></li>
+    <li><a href="/#use-cases">Use Cases</a></li>
+    <li><a href="https://github.com/buswinka/ijpb/releases/latest/download/ImageJPipelineBuilder.jar" onclick="setTimeout(function(){ window.location.href='/onboarding.html'; }, 1500);">Download</a></li>
+    <li><a href="/quickstart.html">Docs</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <ul>
+    <li><a href="/#features" onclick="closeMobile()">Features</a></li>
+    <li><a href="/#use-cases" onclick="closeMobile()">Use Cases</a></li>
+    <li><a href="https://github.com/buswinka/ijpb/releases/latest/download/ImageJPipelineBuilder.jar" onclick="setTimeout(function(){ window.location.href='/onboarding.html'; }, 1500); closeMobile();">Download</a></li>
+    <li><a href="/quickstart.html" onclick="closeMobile()">Docs</a></li>
+  </ul>
+</div>
+
+<main class="article-body">
+  <h1>How to Batch Process Images in ImageJ</h1>
+  <p class="article-meta">April 29, 2026</p>
+  <p>Running the same processing pipeline on hundreds of images by hand is impractical. ImageJ provides two approaches: the <strong>Batch Process</strong> tool for simple operations, and <strong>macros</strong> for anything more complex.</p>
+
+<h2 id="method-1-built-in-batch-processor">Method 1: Built-In Batch Processor</h2>
+
+<p>For straightforward operations like converting formats or applying a single filter:</p>
+
+<ol>
+  <li>Go to <strong>Process → Batch → Macro</strong>.</li>
+  <li>Set the <strong>Input</strong> and <strong>Output</strong> folders.</li>
+  <li>Choose the output format.</li>
+  <li>Paste your processing steps in the macro text box.</li>
+  <li>Click <strong>Process</strong>.</li>
+</ol>
+
+<p>This works for single-step operations but has limited flexibility.</p>
+
+<h2 id="method-2-macro-with-a-loop">Method 2: Macro with a Loop</h2>
+
+<p>For multi-step pipelines, write a macro that loops over all files in a directory:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">dir</span> <span class="o">=</span> <span class="nx">getDirectory</span><span class="p">(</span><span class="dl">"</span><span class="s2">Choose input folder</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">outDir</span> <span class="o">=</span> <span class="nx">getDirectory</span><span class="p">(</span><span class="dl">"</span><span class="s2">Choose output folder</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">list</span> <span class="o">=</span> <span class="nx">getFileList</span><span class="p">(</span><span class="nx">dir</span><span class="p">);</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">list</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">endsWith</span><span class="p">(</span><span class="nx">list</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="dl">"</span><span class="s2">.tif</span><span class="dl">"</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">endsWith</span><span class="p">(</span><span class="nx">list</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="dl">"</span><span class="s2">.png</span><span class="dl">"</span><span class="p">))</span> <span class="k">continue</span><span class="p">;</span>
+
+    <span class="nx">open</span><span class="p">(</span><span class="nx">dir</span> <span class="o">+</span> <span class="nx">list</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+
+    <span class="c1">// Your processing steps here</span>
+    <span class="nx">run</span><span class="p">(</span><span class="dl">"</span><span class="s2">8-bit</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">run</span><span class="p">(</span><span class="dl">"</span><span class="s2">Gaussian Blur...</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">sigma=2</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">setAutoThreshold</span><span class="p">(</span><span class="dl">"</span><span class="s2">Otsu dark</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">run</span><span class="p">(</span><span class="dl">"</span><span class="s2">Convert to Mask</span><span class="dl">"</span><span class="p">);</span>
+
+    <span class="nx">saveAs</span><span class="p">(</span><span class="dl">"</span><span class="s2">Tiff</span><span class="dl">"</span><span class="p">,</span> <span class="nx">outDir</span> <span class="o">+</span> <span class="nx">list</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+    <span class="nx">close</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">if (!endsWith(...))</code> check skips non-image files. <code class="language-plaintext highlighter-rouge">saveAs()</code> writes the result to the output folder.</p>
+
+<h2 id="collecting-results-across-images">Collecting Results Across Images</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">dir</span> <span class="o">=</span> <span class="nx">getDirectory</span><span class="p">(</span><span class="dl">"</span><span class="s2">Choose folder</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">list</span> <span class="o">=</span> <span class="nx">getFileList</span><span class="p">(</span><span class="nx">dir</span><span class="p">);</span>
+<span class="nx">results</span> <span class="o">=</span> <span class="nx">dir</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">results.csv</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">File</span><span class="p">.</span><span class="nx">saveString</span><span class="p">(</span><span class="dl">"</span><span class="s2">Filename,Mean,Area</span><span class="se">\n</span><span class="dl">"</span><span class="p">,</span> <span class="nx">results</span><span class="p">);</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">list</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">endsWith</span><span class="p">(</span><span class="nx">list</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="dl">"</span><span class="s2">.tif</span><span class="dl">"</span><span class="p">))</span> <span class="k">continue</span><span class="p">;</span>
+    <span class="nx">open</span><span class="p">(</span><span class="nx">dir</span> <span class="o">+</span> <span class="nx">list</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+    <span class="nx">run</span><span class="p">(</span><span class="dl">"</span><span class="s2">Measure</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">mean</span> <span class="o">=</span> <span class="nx">getResult</span><span class="p">(</span><span class="dl">"</span><span class="s2">Mean</span><span class="dl">"</span><span class="p">,</span> <span class="nx">nResults</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="nx">area</span> <span class="o">=</span> <span class="nx">getResult</span><span class="p">(</span><span class="dl">"</span><span class="s2">Area</span><span class="dl">"</span><span class="p">,</span> <span class="nx">nResults</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="nx">File</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">list</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">,</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">mean</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">,</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">area</span> <span class="o">+</span> <span class="dl">"</span><span class="se">\n</span><span class="dl">"</span><span class="p">,</span> <span class="nx">results</span><span class="p">);</span>
+    <span class="nx">close</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="common-problems">Common Problems</h2>
+
+<ul>
+  <li><strong>Out of memory:</strong> Add <code class="language-plaintext highlighter-rouge">run("Collect Garbage");</code> inside the loop after each <code class="language-plaintext highlighter-rouge">close()</code>.</li>
+  <li><strong>Wrong file types processed:</strong> Add <code class="language-plaintext highlighter-rouge">endsWith()</code> checks for your specific extensions.</li>
+  <li><strong>Results table grows indefinitely:</strong> Call <code class="language-plaintext highlighter-rouge">run("Clear Results");</code> at the start of each iteration if you only need per-image stats.</li>
+</ul>
+
+<div class="ijpb-callout">
+<strong>With IJPB</strong>
+Type: <em>"Run my cell counting pipeline on all images in this folder and save results to a CSV."</em> IJPB generates the batch macro, handles file iteration, and exports results automatically. <a href="https://github.com/buswinka/ijpb/releases/latest/download/ImageJPipelineBuilder.jar">Download IJPB free →</a>
+</div>
+
+</main>
+
+<footer class="article-footer">
+  <span>&copy; 2026 IJPB &mdash; <a href="/">imagejpipelinebuilder.com</a></span>
+  <span>
+    <a href="/privacy.html">Privacy</a> &middot;
+    <a href="/terms.html">Terms</a>
+  </span>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+    document.body.classList.toggle('nav-open');
+  });
+  function closeMobile() {
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+    document.body.classList.remove('nav-open');
+  }
+</script>
+
+</body>
+</html>

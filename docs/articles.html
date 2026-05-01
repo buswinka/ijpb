@@ -22,17 +22,33 @@ permalink: /articles/
   <meta property="og:description" content="Step-by-step guides for common ImageJ tasks — cell counting, fluorescence measurement, batch processing, and more.">
   <meta property="og:image" content="https://www.imagejpipelinebuilder.com/images/icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Outfit:wght@800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=DM+Sans:wght@400;500;700&family=Outfit:wght@800;900&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="/images/icon.png">
   <link rel="stylesheet" href="/css/articles.css">
 </head>
-<body style="background:#fff;margin:0;">
+<body>
 
-<nav class="article-nav">
-  <a href="/" class="article-nav-logo">IJPB</a>
-  <a href="https://github.com/buswinka/ijpb/releases/latest/download/ImageJPipelineBuilder.jar"
-     class="article-nav-cta">Download Free</a>
+<nav class="topbar">
+  <a href="/" class="topbar-logo">IJPB</a>
+  <ul class="topbar-nav">
+    <li><a href="/#features">Features</a></li>
+    <li><a href="/#use-cases">Use Cases</a></li>
+    <li><a href="https://github.com/buswinka/ijpb/releases/latest/download/ImageJPipelineBuilder.jar" onclick="setTimeout(function(){ window.location.href='/onboarding.html'; }, 1500);">Download</a></li>
+    <li><a href="/quickstart.html">Docs</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <ul>
+    <li><a href="/#features" onclick="closeMobile()">Features</a></li>
+    <li><a href="/#use-cases" onclick="closeMobile()">Use Cases</a></li>
+    <li><a href="https://github.com/buswinka/ijpb/releases/latest/download/ImageJPipelineBuilder.jar" onclick="setTimeout(function(){ window.location.href='/onboarding.html'; }, 1500); closeMobile();">Download</a></li>
+    <li><a href="/quickstart.html" onclick="closeMobile()">Docs</a></li>
+  </ul>
+</div>
 
 <div class="articles-index">
   <h1>ImageJ How-To Guides</h1>
@@ -55,6 +71,21 @@ permalink: /articles/
     <a href="/terms.html">Terms</a>
   </span>
 </footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+    document.body.classList.toggle('nav-open');
+  });
+  function closeMobile() {
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+    document.body.classList.remove('nav-open');
+  }
+</script>
 
 </body>
 </html>

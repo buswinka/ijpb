@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /onboarding.html
+
+Sitemap: https://www.imagejpipelinebuilder.com/sitemap.xml

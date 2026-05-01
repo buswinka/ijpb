@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EGCCXG503Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-EGCCXG503Y');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Count Cells in ImageJ | IJPB</title>
+  <meta name="description" content="Step-by-step guide to counting cells in ImageJ using thresholding and Analyze Particles — and how IJPB does it in one sentence.">
+  <link rel="canonical" href="https://www.imagejpipelinebuilder.com/articles/count-cells-imagej/">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.imagejpipelinebuilder.com/articles/count-cells-imagej/">
+  <meta property="og:title" content="How to Count Cells in ImageJ | IJPB">
+  <meta property="og:description" content="Step-by-step guide to counting cells in ImageJ using thresholding and Analyze Particles — and how IJPB does it in one sentence.">
+  <meta property="og:image" content="https://www.imagejpipelinebuilder.com/images/icon.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How to Count Cells in ImageJ | IJPB">
+  <meta name="twitter:description" content="Step-by-step guide to counting cells in ImageJ using thresholding and Analyze Particles — and how IJPB does it in one sentence.">
+  <meta name="twitter:image" content="https://www.imagejpipelinebuilder.com/images/icon.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Count Cells in ImageJ",
+    "description": "Step-by-step guide to counting cells in ImageJ using thresholding and Analyze Particles — and how IJPB does it in one sentence.",
+    "datePublished": "2026-04-29"
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&family=Outfit:wght@800;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/images/icon.png">
+  <link rel="stylesheet" href="/css/articles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&family=Outfit:wght@800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="/" class="topbar-logo">IJPB</a>
+  <ul class="topbar-nav">
+    <li><a href="/#features">Features</a></li>
+    <li><a href="/#use-cases">Use Cases</a></li>
+    <li><a href="https://github.com/buswinka/ijpb/releases/latest/download/ImageJPipelineBuilder.jar" onclick="setTimeout(function(){ window.location.href='/onboarding.html'; }, 1500);">Download</a></li>
+    <li><a href="/quickstart.html">Docs</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <ul>
+    <li><a href="/#features" onclick="closeMobile()">Features</a></li>
+    <li><a href="/#use-cases" onclick="closeMobile()">Use Cases</a></li>
+    <li><a href="https://github.com/buswinka/ijpb/releases/latest/download/ImageJPipelineBuilder.jar" onclick="setTimeout(function(){ window.location.href='/onboarding.html'; }, 1500); closeMobile();">Download</a></li>
+    <li><a href="/quickstart.html" onclick="closeMobile()">Docs</a></li>
+  </ul>
+</div>
+
+<main class="article-body">
+  <h1>How to Count Cells in ImageJ</h1>
+  <p class="article-meta">April 29, 2026</p>
+  <p>Counting cells in ImageJ is one of the most common tasks in biological image analysis. The standard approach uses thresholding to separate cells from background, then <strong>Analyze Particles</strong> to count distinct objects.</p>
+
+<h2 id="the-manual-method">The Manual Method</h2>
+
+<h3 id="1-open-your-image">1. Open your image</h3>
+
+<p>Go to <strong>File → Open</strong> and select your image. For best results use a grayscale image, or convert first via <strong>Image → Type → 8-bit</strong>.</p>
+
+<h3 id="2-apply-a-threshold">2. Apply a threshold</h3>
+
+<p>Go to <strong>Image → Adjust → Threshold</strong> (or press <code class="language-plaintext highlighter-rouge">Ctrl+Shift+T</code>). Drag the sliders until cells are highlighted in red. Click <strong>Apply</strong>.</p>
+
+<h3 id="3-convert-to-a-binary-mask">3. Convert to a binary mask</h3>
+
+<p>Go to <strong>Process → Binary → Make Binary</strong>. This converts your image to pure black and white — cells are black, background is white.</p>
+
+<h3 id="4-run-analyze-particles">4. Run Analyze Particles</h3>
+
+<p>Go to <strong>Analyze → Analyze Particles</strong>. Set:</p>
+
+<ul>
+  <li><strong>Size (pixel²):</strong> A minimum that filters out noise (e.g. <code class="language-plaintext highlighter-rouge">50-Infinity</code>)</li>
+  <li><strong>Circularity:</strong> <code class="language-plaintext highlighter-rouge">0.5-1.0</code> for roughly round cells</li>
+  <li><strong>Show:</strong> <code class="language-plaintext highlighter-rouge">Outlines</code> to preview detections</li>
+  <li>Check <strong>Display results</strong> and <strong>Summarize</strong></li>
+</ul>
+
+<p>Click <strong>OK</strong>. The <strong>Summary</strong> table shows the total count.</p>
+
+<h2 id="common-problems">Common Problems</h2>
+
+<ul>
+  <li><strong>Too many small objects:</strong> Increase the minimum size in Analyze Particles.</li>
+  <li><strong>Cells merged together:</strong> Run <strong>Process → Binary → Watershed</strong> before Analyze Particles to split touching cells.</li>
+  <li><strong>Inconsistent threshold across images:</strong> Use <strong>Image → Adjust → Auto Threshold</strong> with <code class="language-plaintext highlighter-rouge">Otsu</code> for reproducible results.</li>
+</ul>
+
+<h2 id="imagej-macro-for-batch-cell-counting">ImageJ Macro for Batch Cell Counting</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">dir</span> <span class="o">=</span> <span class="nx">getDirectory</span><span class="p">(</span><span class="dl">"</span><span class="s2">Choose folder</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">list</span> <span class="o">=</span> <span class="nx">getFileList</span><span class="p">(</span><span class="nx">dir</span><span class="p">);</span>
+<span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">list</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">open</span><span class="p">(</span><span class="nx">dir</span> <span class="o">+</span> <span class="nx">list</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+    <span class="nx">run</span><span class="p">(</span><span class="dl">"</span><span class="s2">8-bit</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">setAutoThreshold</span><span class="p">(</span><span class="dl">"</span><span class="s2">Otsu dark</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">run</span><span class="p">(</span><span class="dl">"</span><span class="s2">Convert to Mask</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">run</span><span class="p">(</span><span class="dl">"</span><span class="s2">Watershed</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">run</span><span class="p">(</span><span class="dl">"</span><span class="s2">Analyze Particles...</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">size=50-Infinity circularity=0.5-1.0 display summarize</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">close</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="ijpb-callout">
+<strong>With IJPB</strong>
+Open the IJPB chat window in Fiji and type: <em>"Count all cells in this image and show me the total."</em> IJPB writes and runs the full pipeline for you — threshold, watershed, and Analyze Particles — adjusting parameters to your image automatically. <a href="https://github.com/buswinka/ijpb/releases/latest/download/ImageJPipelineBuilder.jar">Download IJPB free →</a>
+</div>
+
+</main>
+
+<footer class="article-footer">
+  <span>&copy; 2026 IJPB &mdash; <a href="/">imagejpipelinebuilder.com</a></span>
+  <span>
+    <a href="/privacy.html">Privacy</a> &middot;
+    <a href="/terms.html">Terms</a>
+  </span>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+    document.body.classList.toggle('nav-open');
+  });
+  function closeMobile() {
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+    document.body.classList.remove('nav-open');
+  }
+</script>
+
+</body>
+</html>

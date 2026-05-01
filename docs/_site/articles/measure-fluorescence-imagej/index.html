@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EGCCXG503Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-EGCCXG503Y');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Measure Fluorescence Intensity in ImageJ | IJPB</title>
+  <meta name="description" content="Step-by-step guide to measuring mean, integrated, and corrected fluorescence intensity in ImageJ — and how IJPB automates the whole process.">
+  <link rel="canonical" href="https://www.imagejpipelinebuilder.com/articles/measure-fluorescence-imagej/">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.imagejpipelinebuilder.com/articles/measure-fluorescence-imagej/">
+  <meta property="og:title" content="How to Measure Fluorescence Intensity in ImageJ | IJPB">
+  <meta property="og:description" content="Step-by-step guide to measuring mean, integrated, and corrected fluorescence intensity in ImageJ — and how IJPB automates the whole process.">
+  <meta property="og:image" content="https://www.imagejpipelinebuilder.com/images/icon.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How to Measure Fluorescence Intensity in ImageJ | IJPB">
+  <meta name="twitter:description" content="Step-by-step guide to measuring mean, integrated, and corrected fluorescence intensity in ImageJ — and how IJPB automates the whole process.">
+  <meta name="twitter:image" content="https://www.imagejpipelinebuilder.com/images/icon.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Measure Fluorescence Intensity in ImageJ",
+    "description": "Step-by-step guide to measuring mean, integrated, and corrected fluorescence intensity in ImageJ — and how IJPB automates the whole process.",
+    "datePublished": "2026-04-29"
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&family=Outfit:wght@800;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/images/icon.png">
+  <link rel="stylesheet" href="/css/articles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&family=Outfit:wght@800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="/" class="topbar-logo">IJPB</a>
+  <ul class="topbar-nav">
+    <li><a href="/#features">Features</a></li>
+    <li><a href="/#use-cases">Use Cases</a></li>
+    <li><a href="https://github.com/buswinka/ijpb/releases/latest/download/ImageJPipelineBuilder.jar" onclick="setTimeout(function(){ window.location.href='/onboarding.html'; }, 1500);">Download</a></li>
+    <li><a href="/quickstart.html">Docs</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <ul>
+    <li><a href="/#features" onclick="closeMobile()">Features</a></li>
+    <li><a href="/#use-cases" onclick="closeMobile()">Use Cases</a></li>
+    <li><a href="https://github.com/buswinka/ijpb/releases/latest/download/ImageJPipelineBuilder.jar" onclick="setTimeout(function(){ window.location.href='/onboarding.html'; }, 1500); closeMobile();">Download</a></li>
+    <li><a href="/quickstart.html" onclick="closeMobile()">Docs</a></li>
+  </ul>
+</div>
+
+<main class="article-body">
+  <h1>How to Measure Fluorescence Intensity in ImageJ</h1>
+  <p class="article-meta">April 29, 2026</p>
+  <p>Measuring fluorescence intensity is a core quantification task in cell biology. ImageJ provides precise tools for this, but the workflow has several steps — especially when accounting for background with Corrected Total Cell Fluorescence (CTCF).</p>
+
+<h2 id="the-manual-method">The Manual Method</h2>
+
+<h3 id="1-open-your-image">1. Open your image</h3>
+
+<p>Go to <strong>File → Open</strong>. Work in a single channel (split channels via <strong>Image → Color → Split Channels</strong> if needed). Use 16-bit or 32-bit images for best precision.</p>
+
+<h3 id="2-set-your-measurements">2. Set your measurements</h3>
+
+<p>Go to <strong>Analyze → Set Measurements</strong>. Check: <strong>Area</strong>, <strong>Mean gray value</strong>, <strong>Integrated density</strong>, <strong>Min &amp; max gray value</strong>. Click <strong>OK</strong>.</p>
+
+<h3 id="3-select-a-region-of-interest">3. Select a region of interest</h3>
+
+<p>Use the <strong>Oval</strong> or <strong>Freehand</strong> selection tool to draw around your cell.</p>
+
+<h3 id="4-measure-the-roi">4. Measure the ROI</h3>
+
+<p>Press <code class="language-plaintext highlighter-rouge">Ctrl+M</code> or go to <strong>Analyze → Measure</strong>. A row is added to the Results table with area, mean intensity, and integrated density.</p>
+
+<h3 id="5-measure-background">5. Measure background</h3>
+
+<p>Select a cell-free region using the same tool. Press <code class="language-plaintext highlighter-rouge">Ctrl+M</code> again.</p>
+
+<h3 id="6-calculate-ctcf">6. Calculate CTCF</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CTCF = Integrated Density − (Area of cell × Mean background intensity)
+</code></pre></div></div>
+
+<p>Compute this in the Results table or export to a spreadsheet.</p>
+
+<h2 id="measuring-multiple-cells-with-the-roi-manager">Measuring Multiple Cells with the ROI Manager</h2>
+
+<ol>
+  <li>Draw an ROI, press <code class="language-plaintext highlighter-rouge">T</code> to add it to <strong>Analyze → Tools → ROI Manager</strong>.</li>
+  <li>Repeat for each cell.</li>
+  <li>Select all ROIs in the manager and click <strong>Measure</strong>.</li>
+</ol>
+
+<h2 id="imagej-macro-for-batch-fluorescence-measurement">ImageJ Macro for Batch Fluorescence Measurement</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">dir</span> <span class="o">=</span> <span class="nx">getDirectory</span><span class="p">(</span><span class="dl">"</span><span class="s2">Choose folder</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">list</span> <span class="o">=</span> <span class="nx">getFileList</span><span class="p">(</span><span class="nx">dir</span><span class="p">);</span>
+<span class="nx">run</span><span class="p">(</span><span class="dl">"</span><span class="s2">Set Measurements...</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">area mean integrated min display redirect=None decimal=3</span><span class="dl">"</span><span class="p">);</span>
+<span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">list</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">open</span><span class="p">(</span><span class="nx">dir</span> <span class="o">+</span> <span class="nx">list</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+    <span class="nx">run</span><span class="p">(</span><span class="dl">"</span><span class="s2">Select All</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">run</span><span class="p">(</span><span class="dl">"</span><span class="s2">Measure</span><span class="dl">"</span><span class="p">);</span>
+    <span class="nx">close</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="nx">saveAs</span><span class="p">(</span><span class="dl">"</span><span class="s2">Results</span><span class="dl">"</span><span class="p">,</span> <span class="nx">dir</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">fluorescence_results.csv</span><span class="dl">"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="ijpb-callout">
+<strong>With IJPB</strong>
+Type: <em>"Measure the mean fluorescence intensity of every cell in this image and export a CSV."</em> IJPB handles ROI detection, background subtraction, CTCF calculation, and CSV export automatically. <a href="https://github.com/buswinka/ijpb/releases/latest/download/ImageJPipelineBuilder.jar">Download IJPB free →</a>
+</div>
+
+</main>
+
+<footer class="article-footer">
+  <span>&copy; 2026 IJPB &mdash; <a href="/">imagejpipelinebuilder.com</a></span>
+  <span>
+    <a href="/privacy.html">Privacy</a> &middot;
+    <a href="/terms.html">Terms</a>
+  </span>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+    document.body.classList.toggle('nav-open');
+  });
+  function closeMobile() {
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+    document.body.classList.remove('nav-open');
+  }
+</script>
+
+</body>
+</html>

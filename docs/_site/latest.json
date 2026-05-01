@@ -1,0 +1,7 @@
+{
+  "version": "0.1.43",
+  "url": "https://github.com/buswinka/ijpb/releases/download/v0.1.43/ImageJPipelineBuilder.jar",
+  "sha256": "b53f3340cd595e1a4aaa17f22a72daff935e40725467b937165c819612ea1113",
+  "mandatory": false,
+  "release_notes": "Increased stability of the backend and plugin. "
+}

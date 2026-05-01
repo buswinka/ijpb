@@ -10,32 +10,18 @@
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ page.title }} | IJPB</title>
-  <meta name="description" content="{{ page.description }}">
-  <link rel="canonical" href="https://www.imagejpipelinebuilder.com{{ page.url }}">
-  <meta property="og:type" content="article">
-  <meta property="og:url" content="https://www.imagejpipelinebuilder.com{{ page.url }}">
-  <meta property="og:title" content="{{ page.title }} | IJPB">
-  <meta property="og:description" content="{{ page.description }}">
+  <title>ImageJ How-To Guides | IJPB</title>
+  <meta name="description" content="Step-by-step guides for common ImageJ tasks — cell counting, fluorescence measurement, batch processing, and more.">
+  <link rel="canonical" href="https://www.imagejpipelinebuilder.com/articles/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.imagejpipelinebuilder.com/articles/">
+  <meta property="og:title" content="ImageJ How-To Guides | IJPB">
+  <meta property="og:description" content="Step-by-step guides for common ImageJ tasks — cell counting, fluorescence measurement, batch processing, and more.">
   <meta property="og:image" content="https://www.imagejpipelinebuilder.com/images/icon.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{ page.title }} | IJPB">
-  <meta name="twitter:description" content="{{ page.description }}">
-  <meta name="twitter:image" content="https://www.imagejpipelinebuilder.com/images/icon.png">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    "name": "{{ page.title | escape }}",
-    "description": "{{ page.description | escape }}",
-    "datePublished": "{{ page.date | date: '%Y-%m-%d' }}"
-  }
-  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&family=Outfit:wght@800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=DM+Sans:wght@400;500;700&family=Outfit:wght@800;900&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="/images/icon.png">
   <link rel="stylesheet" href="/css/articles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&family=Outfit:wght@800;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -61,11 +47,31 @@
   </ul>
 </div>
 
-<main class="article-body">
-  <h1>{{ page.title }}</h1>
-  <p class="article-meta">{{ page.date | date: "%B %-d, %Y" }}</p>
-  {{ content }}
-</main>
+<div class="articles-index">
+  <h1>ImageJ How-To Guides</h1>
+  <p class="subtitle">Step-by-step guides for common ImageJ workflows — and how IJPB handles each one in plain English.</p>
+
+  
+  
+  <div class="article-card">
+    <a href="/articles/measure-fluorescence-imagej/">How to Measure Fluorescence Intensity in ImageJ</a>
+    <p class="card-desc">Step-by-step guide to measuring mean, integrated, and corrected fluorescence intensity in ImageJ — and how IJPB automates the whole process.</p>
+    <p class="card-date">April 29, 2026</p>
+  </div>
+  
+  <div class="article-card">
+    <a href="/articles/count-cells-imagej/">How to Count Cells in ImageJ</a>
+    <p class="card-desc">Step-by-step guide to counting cells in ImageJ using thresholding and Analyze Particles — and how IJPB does it in one sentence.</p>
+    <p class="card-date">April 29, 2026</p>
+  </div>
+  
+  <div class="article-card">
+    <a href="/articles/batch-process-images-imagej/">How to Batch Process Images in ImageJ</a>
+    <p class="card-desc">How to run the same analysis pipeline across a folder of images in ImageJ using macros and the built-in batch processor — and how IJPB handles it in one step.</p>
+    <p class="card-date">April 29, 2026</p>
+  </div>
+  
+</div>
 
 <footer class="article-footer">
   <span>&copy; 2026 IJPB &mdash; <a href="/">imagejpipelinebuilder.com</a></span>
