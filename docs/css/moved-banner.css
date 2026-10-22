@@ -1,0 +1,23 @@
+/* "IJPB is now Nissl" notice, shown on every legacy page. */
+.moved-banner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  background: #EF233C;
+  color: #FFFFFF;
+  border-top: 2px solid #262626;
+  padding: 12px 16px;
+  text-align: center;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.moved-banner a {
+  color: #FFFFFF;
+  font-weight: 700;
+  text-decoration: underline;
+}
+body { padding-bottom: 64px; }

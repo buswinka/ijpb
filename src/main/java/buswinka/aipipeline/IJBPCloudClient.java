@@ -380,4 +380,8 @@ public class IJBPCloudClient implements LLMClient {
             conn.disconnect();
         }
     }
+
+    public static class QuotaException extends RuntimeException {
+        public QuotaException(String message) { super(message); }
+    }
 }

@@ -27,8 +27,8 @@ public class PipelineMenuStartup implements PlugIn {
     public void run(String arg) {
         cleanIjpbTmpDir();
         new PipelineManager().reinjectAllMenuItems();
-        PluginUpdater.checkAsync();
         ManagedVenv.ensureAsync();
+        MovedToNissl.showAtStartup();
     }
 
     /**
