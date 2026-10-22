@@ -22,6 +22,7 @@ public class PipelineBuilder implements PlugIn {
             IJ.showMessage("AI Pipeline Builder", "AI Pipeline Builder is already open.");
             return;
         }
+        if (!MovedToNissl.showOnLaunch()) return;
         running = true;
 
         PipelineMenuStartup.ensureAutoRunInstalled();

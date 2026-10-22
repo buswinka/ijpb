@@ -1,27 +1,21 @@
 package buswinka.aipipeline;
 
 import ij.IJ;
-import ij.Prefs;
 import ij.plugin.BrowserLauncher;
 import ij.plugin.PlugIn;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 /**
  * Final-release notice: ImageJ Pipeline Builder has been replaced by Nissl.
  *
- * Shown once per Fiji launch from PipelineMenuStartup until the user chooses
- * "Don't show again". Also registered as Plugins > Pipelines > Moved to Nissl
- * so it can always be reopened.
+ * Shown the first time a plugin window is opened in each Fiji session
+ * (see showOnLaunch), and on demand from Plugins > Pipelines > Moved to Nissl.
  */
 public class MovedToNissl implements PlugIn {
 
     static final String NISSL_URL = "https://chromatype.bio";
-
-    private static final String PREF_DISMISSED = "ijpb.movedToNissl.dismissed";
-    private static final String TAG = "MovedToNissl";
 
     private static final String MESSAGE =
         "<html><body style='width:340px'>"
@@ -32,50 +26,51 @@ public class MovedToNissl implements PlugIn {
         + "<p>Get it at <b>chromatype.bio</b>.</p>"
         + "</body></html>";
 
+    private static final String OPEN = "Open chromatype.bio";
+    private static final String UNINSTALL = "Uninstall IJPB";
+    private static final String CONTINUE = "Continue to IJPB";
+    private static final String CLOSE = "Close";
+
+    private static volatile boolean shownThisSession = false;
+
     @Override
     public void run(String arg) {
-        show(false);
+        show(new Object[]{OPEN, UNINSTALL, CLOSE});
     }
 
-    /** Shows the notice at startup unless the user has opted out. */
-    static void showAtStartup() {
-        if (Prefs.get(PREF_DISMISSED, false)) {
-            DebugLog.log(TAG, "notice previously dismissed — skipping");
-            return;
-        }
-        SwingUtilities.invokeLater(() -> show(true));
+    /**
+     * Call at the top of each plugin entry point. Shows the notice once per
+     * Fiji session; returns false if the caller should not open its window.
+     */
+    static boolean showOnLaunch() {
+        if (shownThisSession) return true;
+        shownThisSession = true;
+        Object picked = show(new Object[]{OPEN, UNINSTALL, CONTINUE});
+        return picked != OPEN && picked != UNINSTALL;
     }
 
-    private static void show(boolean atStartup) {
+    private static Object show(Object[] opts) {
         if (GraphicsEnvironment.isHeadless()) {
             IJ.log("ImageJ Pipeline Builder has moved to Nissl: " + NISSL_URL);
-            return;
+            return null;
         }
-
-        final String open = "Open chromatype.bio", uninstall = "Uninstall IJPB";
-        final String later = "Later", dismiss = "Don't show again", close = "Close";
-        Object[] opts = atStartup
-            ? new Object[]{open, uninstall, later, dismiss}
-            : new Object[]{open, uninstall, close};
 
         int choice = JOptionPane.showOptionDialog(
             null, MESSAGE, "ImageJ Pipeline Builder has moved",
             JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
             null, opts, opts[0]);
-        if (choice < 0) return;
+        if (choice < 0) return null;
         Object picked = opts[choice];
 
-        if (picked == open) {
+        if (picked == OPEN) {
             try {
                 BrowserLauncher.openURL(NISSL_URL);
             } catch (Exception e) {
                 IJ.log("Could not open browser. Visit " + NISSL_URL);
             }
-        } else if (picked == uninstall) {
+        } else if (picked == UNINSTALL) {
             new UninstallCommand().run("");
-        } else if (picked == dismiss) {
-            Prefs.set(PREF_DISMISSED, true);
-            Prefs.savePreferences();
         }
+        return picked;
     }
 }
