@@ -1,7 +1,7 @@
 {
-  "version": "0.1.44",
-  "url": "https://github.com/buswinka/ijpb/releases/download/v0.1.44/ImageJPipelineBuilder.jar",
-  "sha256": "199c49f406a45f187907b2429c56b76d4c22534b2b397d9cc23310da7a5625e4",
+  "version": "0.1.45",
+  "url": "https://github.com/buswinka/ijpb/releases/download/v0.1.45/ImageJPipelineBuilder.jar",
+  "sha256": "08108128ca2daab359ea75acbcac9a16753bd8170f61678bb3c5c3e2aff9fdf5",
   "mandatory": true,
-  "release_notes": "ImageJ Pipeline Builder has moved to Nissl (https://chromatype.bio). This is the final release."
+  "release_notes": "ImageJ Pipeline Builder has moved to Nissl (https://chromatype.bio). The notice now only appears when you open the plugin."
 }
